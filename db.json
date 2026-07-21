@@ -1,0 +1,2369 @@
+{
+  "menu": [
+    {
+      "id": "1",
+      "name": "Bakso Bakar",
+      "category": "Makanan",
+      "price": 5000,
+      "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=300&q=80",
+      "stock": 118,
+      "minStock": 20,
+      "unit": "Tusuk"
+    },
+    {
+      "id": "2",
+      "name": "Tahu Bakar",
+      "category": "Makanan",
+      "price": 8000,
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&q=80",
+      "stock": 85,
+      "minStock": 15,
+      "unit": "Tusuk"
+    },
+    {
+      "id": "3",
+      "name": "Sosis Bakar",
+      "category": "Makanan",
+      "price": 10000,
+      "image": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=300&q=80",
+      "stock": 15,
+      "minStock": 25,
+      "unit": "Tusuk"
+    },
+    {
+      "id": "4",
+      "name": "Pentol Telur",
+      "category": "Makanan",
+      "price": 5000,
+      "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&q=80",
+      "stock": 140,
+      "minStock": 30,
+      "unit": "Tusuk"
+    },
+    {
+      "id": "5",
+      "name": "Tahu Bakso",
+      "category": "Makanan",
+      "price": 2000,
+      "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=300&q=80",
+      "stock": 110,
+      "minStock": 20,
+      "unit": "Pcs"
+    },
+    {
+      "id": "6",
+      "name": "Es Teh Original",
+      "category": "Minuman",
+      "price": 5000,
+      "image": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=300&q=80",
+      "stock": 300,
+      "minStock": 50,
+      "unit": "Gelas"
+    },
+    {
+      "id": "7",
+      "name": "Lemon Tea Soda",
+      "category": "Minuman",
+      "price": 10000,
+      "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=300&q=80",
+      "stock": 90,
+      "minStock": 20,
+      "unit": "Gelas"
+    },
+    {
+      "id": "8",
+      "name": "Es Jeruk Peras",
+      "category": "Minuman",
+      "price": 10000,
+      "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=300&q=80",
+      "stock": 8,
+      "minStock": 15,
+      "unit": "Gelas"
+    },
+    {
+      "id": "9",
+      "name": "Bakso Ayam Frozen",
+      "category": "Frozen Food",
+      "price": 30000,
+      "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80",
+      "stock": 45,
+      "minStock": 10,
+      "unit": "Pack"
+    },
+    {
+      "id": "10",
+      "name": "Tahu Bakso Frozen",
+      "category": "Frozen Food",
+      "price": 20000,
+      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&q=80",
+      "stock": 3,
+      "minStock": 8,
+      "unit": "Pack"
+    }
+  ],
+  "employees": [
+    {
+      "id": "emp_1",
+      "name": "Daeng Baji (Owner)",
+      "role": "OWNER",
+      "phone": "085342016403",
+      "address": "Cikke'e, Soppeng",
+      "salary": 15000000,
+      "pin": "123456",
+      "status": "ACTIVE",
+      "attendanceCount": 26
+    },
+    {
+      "id": "emp_2",
+      "name": "Sitti Saleha",
+      "role": "MANAGER",
+      "phone": "081234567890",
+      "address": "Jl. Salotungo, Soppeng",
+      "salary": 4500000,
+      "pin": "222222",
+      "status": "ACTIVE",
+      "attendanceCount": 25
+    },
+    {
+      "id": "emp_3",
+      "name": "Junaedi Kasir",
+      "role": "KASIR",
+      "phone": "081234567891",
+      "address": "Watansoppeng",
+      "salary": 3000000,
+      "pin": "333333",
+      "status": "ACTIVE",
+      "attendanceCount": 24
+    },
+    {
+      "id": "emp_4",
+      "name": "Chef Daeng",
+      "role": "DAPUR",
+      "phone": "081234567892",
+      "address": "Cikke'e",
+      "salary": 3500000,
+      "pin": "444444",
+      "status": "ACTIVE",
+      "attendanceCount": 25
+    },
+    {
+      "id": "emp_5",
+      "name": "Gudang Daeng",
+      "role": "GUDANG",
+      "phone": "081234567893",
+      "address": "Lalabata, Soppeng",
+      "salary": 2800000,
+      "pin": "555555",
+      "status": "ACTIVE",
+      "attendanceCount": 22
+    }
+  ],
+  "customers": [
+    {
+      "id": "c_1",
+      "name": "Andi Yusuf",
+      "phone": "085299123456",
+      "email": "andi.yusuf@gmail.com",
+      "birthDate": "1995-04-12",
+      "points": 450,
+      "level": "Gold",
+      "joinDate": "2025-01-10"
+    },
+    {
+      "id": "c_2",
+      "name": "Bahrul",
+      "phone": "085299123457",
+      "email": "bahrul@gmail.com",
+      "birthDate": "1998-08-22",
+      "points": 120,
+      "level": "Silver",
+      "joinDate": "2025-02-14"
+    },
+    {
+      "id": "c_3",
+      "name": "Fitriani",
+      "phone": "085299123458",
+      "email": "fitri@gmail.com",
+      "birthDate": "2001-11-03",
+      "points": 950,
+      "level": "Platinum",
+      "joinDate": "2024-08-01"
+    },
+    {
+      "id": "c_4",
+      "name": "Jirana Daeng",
+      "phone": "085342016403",
+      "email": "jiradaengbaji@gmail.com",
+      "birthDate": "1990-07-20",
+      "points": 2000,
+      "level": "Platinum",
+      "joinDate": "2024-05-15"
+    },
+    {
+      "id": "c_5",
+      "name": "Rahmat",
+      "phone": "081298543122",
+      "email": "rahmat@gmail.com",
+      "birthDate": "1997-01-15",
+      "points": 30,
+      "level": "Bronze",
+      "joinDate": "2025-05-20"
+    }
+  ],
+  "inventory": [
+    {
+      "id": "inv_1",
+      "name": "Daging Sapi Giling",
+      "stock": 45,
+      "minStock": 10,
+      "unit": "Kg",
+      "category": "Daging",
+      "lastUpdated": "2026-07-03T10:00:00Z",
+      "supplierName": "Supplier Daging Soppeng"
+    },
+    {
+      "id": "inv_2",
+      "name": "Tahu Putih Segar",
+      "stock": 120,
+      "minStock": 30,
+      "unit": "Pcs",
+      "category": "Tahu",
+      "lastUpdated": "2026-07-03T09:00:00Z",
+      "supplierName": "Sinar Tahu Lalabata"
+    },
+    {
+      "id": "inv_3",
+      "name": "Sosis Sapi Jumbo",
+      "stock": 8,
+      "minStock": 25,
+      "unit": "Pack",
+      "category": "Sosis",
+      "lastUpdated": "2026-07-03T08:30:00Z",
+      "supplierName": "Frozen Food Utama Soppeng"
+    },
+    {
+      "id": "inv_4",
+      "name": "Bumbu Bakso Rahasia",
+      "stock": 12,
+      "minStock": 5,
+      "unit": "Kg",
+      "category": "Rempah",
+      "lastUpdated": "2026-07-03T11:00:00Z",
+      "supplierName": "Srikandi Rempah"
+    },
+    {
+      "id": "inv_5",
+      "name": "Jeruk Peras Fresh",
+      "stock": 4,
+      "minStock": 10,
+      "unit": "Kg",
+      "category": "Buah",
+      "lastUpdated": "2026-07-03T08:00:00Z",
+      "supplierName": "Kebun Jeruk Gantarang"
+    },
+    {
+      "id": "inv_6",
+      "name": "Teh Celup Original",
+      "stock": 35,
+      "minStock": 10,
+      "unit": "Kotak",
+      "category": "Teh",
+      "lastUpdated": "2026-07-02T15:00:00Z",
+      "supplierName": "Grosir Soppeng Raya"
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "sup_1",
+      "name": "Supplier Daging Soppeng",
+      "phone": "081122334455",
+      "email": "daging@soppeng.com",
+      "address": "Pasar Sentral Soppeng"
+    },
+    {
+      "id": "sup_2",
+      "name": "Frozen Food Utama Soppeng",
+      "phone": "081122334456",
+      "email": "ff.utama@gmail.com",
+      "address": "Jl. Kemakmuran, Soppeng"
+    },
+    {
+      "id": "sup_3",
+      "name": "Sinar Tahu Lalabata",
+      "phone": "081122334457",
+      "email": "sinartahu@gmail.com",
+      "address": "Lalabata, Soppeng"
+    }
+  ],
+  "outlets": [
+    {
+      "id": "out_1",
+      "name": "Outlet Utama (Cikke'e)",
+      "address": "Cikke'e, Jl. Salotungo, Soppeng",
+      "phone": "085342016403",
+      "status": "OPEN"
+    },
+    {
+      "id": "out_2",
+      "name": "Cabang Lalabata",
+      "address": "Jl. Pemuda, Lalabata, Soppeng",
+      "phone": "085342016404",
+      "status": "OPEN"
+    }
+  ],
+  "purchaseOrders": [
+    {
+      "id": "PO-20260701-01",
+      "supplierId": "sup_1",
+      "supplierName": "Supplier Daging Soppeng",
+      "items": [
+        {
+          "name": "Daging Sapi Giling",
+          "quantity": 20,
+          "unit": "Kg",
+          "price": 120000
+        }
+      ],
+      "total": 2400000,
+      "status": "RECEIVED",
+      "createdAt": "2026-07-01T10:00:00Z"
+    },
+    {
+      "id": "PO-20260703-01",
+      "supplierId": "sup_2",
+      "supplierName": "Frozen Food Utama Soppeng",
+      "items": [
+        {
+          "name": "Sosis Sapi Jumbo",
+          "quantity": 30,
+          "unit": "Pack",
+          "price": 45000
+        }
+      ],
+      "total": 1350000,
+      "status": "PENDING",
+      "createdAt": "2026-07-03T11:00:00Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-20260627-101",
+      "queueNumber": "002",
+      "tableNumber": "10",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 15000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 15000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-27T18:20:00Z"
+    },
+    {
+      "id": "ORD-20260627-102",
+      "queueNumber": "003",
+      "tableNumber": "10",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 2
+        },
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 30000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 25000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-27T17:10:00Z"
+    },
+    {
+      "id": "ORD-20260627-103",
+      "queueNumber": "004",
+      "tableNumber": "4",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 3
+        },
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 3
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 65000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 65000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-27T19:16:00Z"
+    },
+    {
+      "id": "ORD-20260627-104",
+      "queueNumber": "005",
+      "tableNumber": "11",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 2
+        },
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 3
+        },
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 41000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 41000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-06-27T15:40:00Z"
+    },
+    {
+      "id": "ORD-20260627-105",
+      "queueNumber": "006",
+      "tableNumber": "11",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 20000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 20000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-27T14:16:00Z"
+    },
+    {
+      "id": "ORD-20260627-106",
+      "queueNumber": "007",
+      "tableNumber": "12",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 4
+        },
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 2
+        },
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 140000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 135000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-06-27T19:52:00Z"
+    },
+    {
+      "id": "ORD-20260628-107",
+      "queueNumber": "008",
+      "tableNumber": "5",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 3
+        },
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 2
+        },
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 66000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 66000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-28T19:51:00Z"
+    },
+    {
+      "id": "ORD-20260628-108",
+      "queueNumber": "009",
+      "tableNumber": "6",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 2000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": -3000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-28T19:26:00Z"
+    },
+    {
+      "id": "ORD-20260628-109",
+      "queueNumber": "010",
+      "tableNumber": "10",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 3
+        },
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 2
+        },
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 80000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 75000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-28T14:27:00Z"
+    },
+    {
+      "id": "ORD-20260628-110",
+      "queueNumber": "011",
+      "tableNumber": "7",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 1
+        },
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 4
+        },
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 19000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 14000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-28T18:25:00Z"
+    },
+    {
+      "id": "ORD-20260628-111",
+      "queueNumber": "012",
+      "tableNumber": "4",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "9",
+          "name": "Bakso Ayam Frozen",
+          "price": 30000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 120000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 120000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-06-28T18:17:00Z"
+    },
+    {
+      "id": "ORD-20260628-112",
+      "queueNumber": "013",
+      "tableNumber": "4",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 10000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 10000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-28T16:50:00Z"
+    },
+    {
+      "id": "ORD-20260628-113",
+      "queueNumber": "014",
+      "tableNumber": "11",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 2
+        },
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 44000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 44000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-28T18:42:00Z"
+    },
+    {
+      "id": "ORD-20260629-114",
+      "queueNumber": "015",
+      "tableNumber": "3",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 23000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 18000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T16:39:00Z"
+    },
+    {
+      "id": "ORD-20260629-115",
+      "queueNumber": "016",
+      "tableNumber": "1",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 40000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 40000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T14:50:00Z"
+    },
+    {
+      "id": "ORD-20260629-116",
+      "queueNumber": "017",
+      "tableNumber": "3",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 2
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 20000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 20000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T18:19:00Z"
+    },
+    {
+      "id": "ORD-20260629-117",
+      "queueNumber": "018",
+      "tableNumber": "7",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "9",
+          "name": "Bakso Ayam Frozen",
+          "price": 30000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 60000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 60000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-06-29T14:38:00Z"
+    },
+    {
+      "id": "ORD-20260629-118",
+      "queueNumber": "019",
+      "tableNumber": "10",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 10000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 10000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T15:18:00Z"
+    },
+    {
+      "id": "ORD-20260629-119",
+      "queueNumber": "020",
+      "tableNumber": "3",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 4
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 1
+        },
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 65000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 65000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T14:23:00Z"
+    },
+    {
+      "id": "ORD-20260629-120",
+      "queueNumber": "021",
+      "tableNumber": "4",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 3
+        },
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 44000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 44000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T15:0:00Z"
+    },
+    {
+      "id": "ORD-20260629-121",
+      "queueNumber": "022",
+      "tableNumber": "8",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 4
+        },
+        {
+          "productId": "9",
+          "name": "Bakso Ayam Frozen",
+          "price": 30000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 70000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 70000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T18:37:00Z"
+    },
+    {
+      "id": "ORD-20260629-122",
+      "queueNumber": "023",
+      "tableNumber": "5",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 40000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 40000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-06-29T17:59:00Z"
+    },
+    {
+      "id": "ORD-20260629-123",
+      "queueNumber": "024",
+      "tableNumber": "2",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 4
+        },
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 4
+        },
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 60000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 60000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T15:1:00Z"
+    },
+    {
+      "id": "ORD-20260629-124",
+      "queueNumber": "025",
+      "tableNumber": "9",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 30000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 30000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-29T14:36:00Z"
+    },
+    {
+      "id": "ORD-20260630-125",
+      "queueNumber": "026",
+      "tableNumber": "6",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 3
+        },
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 3
+        },
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 41000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 41000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-06-30T16:14:00Z"
+    },
+    {
+      "id": "ORD-20260630-126",
+      "queueNumber": "027",
+      "tableNumber": "4",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 3
+        },
+        {
+          "productId": "9",
+          "name": "Bakso Ayam Frozen",
+          "price": 30000,
+          "quantity": 1
+        },
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 76000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 76000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-30T14:28:00Z"
+    },
+    {
+      "id": "ORD-20260630-127",
+      "queueNumber": "028",
+      "tableNumber": "9",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 5000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 5000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-30T15:0:00Z"
+    },
+    {
+      "id": "ORD-20260630-128",
+      "queueNumber": "029",
+      "tableNumber": "3",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 4
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 2
+        },
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 98000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 98000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-30T16:26:00Z"
+    },
+    {
+      "id": "ORD-20260630-129",
+      "queueNumber": "030",
+      "tableNumber": "4",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 24000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 24000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-06-30T14:35:00Z"
+    },
+    {
+      "id": "ORD-20260630-130",
+      "queueNumber": "031",
+      "tableNumber": "2",
+      "customerId": "c_4",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 40000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 35000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-06-30T17:44:00Z"
+    },
+    {
+      "id": "ORD-20260701-131",
+      "queueNumber": "032",
+      "tableNumber": "11",
+      "customerId": "c_4",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 2
+        },
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 31000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 31000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-01T14:4:00Z"
+    },
+    {
+      "id": "ORD-20260701-132",
+      "queueNumber": "033",
+      "tableNumber": "8",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 40000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 40000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-07-01T18:21:00Z"
+    },
+    {
+      "id": "ORD-20260701-133",
+      "queueNumber": "034",
+      "tableNumber": "8",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "9",
+          "name": "Bakso Ayam Frozen",
+          "price": 30000,
+          "quantity": 3
+        },
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 4
+        },
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 200000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 200000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-01T19:2:00Z"
+    },
+    {
+      "id": "ORD-20260701-134",
+      "queueNumber": "035",
+      "tableNumber": "3",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 20000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 20000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-01T18:3:00Z"
+    },
+    {
+      "id": "ORD-20260701-135",
+      "queueNumber": "036",
+      "tableNumber": "4",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 40000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 40000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-07-01T17:50:00Z"
+    },
+    {
+      "id": "ORD-20260701-136",
+      "queueNumber": "037",
+      "tableNumber": "7",
+      "customerId": "c_4",
+      "items": [
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 2
+        },
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 2
+        },
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 28000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 28000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-01T18:45:00Z"
+    },
+    {
+      "id": "ORD-20260701-137",
+      "queueNumber": "038",
+      "tableNumber": "8",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 3
+        },
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 3
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 35000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 35000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-01T18:17:00Z"
+    },
+    {
+      "id": "ORD-20260702-138",
+      "queueNumber": "039",
+      "tableNumber": "9",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 3
+        },
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 64000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 59000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T18:31:00Z"
+    },
+    {
+      "id": "ORD-20260702-139",
+      "queueNumber": "040",
+      "tableNumber": "10",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 4
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 37000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 37000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-07-02T19:0:00Z"
+    },
+    {
+      "id": "ORD-20260702-140",
+      "queueNumber": "041",
+      "tableNumber": "4",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 20000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 15000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T17:38:00Z"
+    },
+    {
+      "id": "ORD-20260702-141",
+      "queueNumber": "042",
+      "tableNumber": "6",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 1
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 1
+        },
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 33000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 33000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T15:46:00Z"
+    },
+    {
+      "id": "ORD-20260702-142",
+      "queueNumber": "043",
+      "tableNumber": "8",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 4
+        },
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 70000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 70000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T18:53:00Z"
+    },
+    {
+      "id": "ORD-20260702-143",
+      "queueNumber": "044",
+      "tableNumber": "9",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 8000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 3000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T14:0:00Z"
+    },
+    {
+      "id": "ORD-20260702-144",
+      "queueNumber": "045",
+      "tableNumber": "9",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "9",
+          "name": "Bakso Ayam Frozen",
+          "price": 30000,
+          "quantity": 2
+        },
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 84000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 84000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T18:47:00Z"
+    },
+    {
+      "id": "ORD-20260702-145",
+      "queueNumber": "046",
+      "tableNumber": "5",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 15000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 10000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T17:55:00Z"
+    },
+    {
+      "id": "ORD-20260702-146",
+      "queueNumber": "047",
+      "tableNumber": "12",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 20000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 20000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T19:55:00Z"
+    },
+    {
+      "id": "ORD-20260702-147",
+      "queueNumber": "048",
+      "tableNumber": "8",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 1
+        },
+        {
+          "productId": "9",
+          "name": "Bakso Ayam Frozen",
+          "price": 30000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 68000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 68000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T18:30:00Z"
+    },
+    {
+      "id": "ORD-20260702-148",
+      "queueNumber": "049",
+      "tableNumber": "4",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 3
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 25000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 25000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-02T19:42:00Z"
+    },
+    {
+      "id": "ORD-20260703-149",
+      "queueNumber": "050",
+      "tableNumber": "9",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 4000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 4000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-03T14:54:00Z"
+    },
+    {
+      "id": "ORD-20260703-150",
+      "queueNumber": "051",
+      "tableNumber": "6",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 2
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 25000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 25000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-03T14:25:00Z"
+    },
+    {
+      "id": "ORD-20260703-151",
+      "queueNumber": "052",
+      "tableNumber": "7",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 2
+        },
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 4
+        },
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 128000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 128000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-03T18:44:00Z"
+    },
+    {
+      "id": "ORD-20260703-152",
+      "queueNumber": "053",
+      "tableNumber": "6",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 2
+        },
+        {
+          "productId": "4",
+          "name": "Pentol Telur",
+          "price": 5000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 25000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 25000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_2",
+      "createdAt": "2026-07-03T19:44:00Z"
+    },
+    {
+      "id": "ORD-20260703-153",
+      "queueNumber": "054",
+      "tableNumber": "7",
+      "customerId": "c_1",
+      "items": [
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 1
+        },
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 15000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 15000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-03T15:4:00Z"
+    },
+    {
+      "id": "ORD-20260703-154",
+      "queueNumber": "055",
+      "tableNumber": "7",
+      "customerId": "c_3",
+      "items": [
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 2
+        },
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 3
+        },
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 64000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 64000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-03T15:13:00Z"
+    },
+    {
+      "id": "ORD-20260703-155",
+      "queueNumber": "056",
+      "tableNumber": "7",
+      "customerId": "c_5",
+      "items": [
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 4
+        },
+        {
+          "productId": "5",
+          "name": "Tahu Bakso",
+          "price": 2000,
+          "quantity": 4
+        }
+      ],
+      "subtotal": 48000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 5000,
+      "total": 43000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-03T15:12:00Z"
+    },
+    {
+      "id": "ORD-20260703-156",
+      "queueNumber": "057",
+      "tableNumber": "12",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 3
+        },
+        {
+          "productId": "10",
+          "name": "Tahu Bakso Frozen",
+          "price": 20000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 100000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 100000,
+      "paymentMethod": "E-Wallet",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-03T19:9:00Z"
+    },
+    {
+      "id": "ORD-20260703-157",
+      "queueNumber": "058",
+      "tableNumber": "11",
+      "customerId": "c_2",
+      "items": [
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 3
+        }
+      ],
+      "subtotal": 30000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 30000,
+      "paymentMethod": "Debit",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "createdAt": "2026-07-03T15:43:00Z"
+    },
+    {
+      "id": "ORD-20260703-501",
+      "queueNumber": "001",
+      "tableNumber": "4",
+      "customerName": "Ahmad",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 3
+        },
+        {
+          "productId": "6",
+          "name": "Es Teh Original",
+          "price": 5000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 25000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 25000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "estimatedPrepTime": 12,
+      "createdAt": "2026-07-03T19:40:00Z",
+      "cookedAt": "2026-07-08T14:55:02.873Z",
+      "deliveredAt": "2026-07-08T14:55:09.558Z"
+    },
+    {
+      "id": "ORD-20260703-502",
+      "queueNumber": "002",
+      "tableNumber": "9",
+      "customerName": "Irwan",
+      "items": [
+        {
+          "productId": "3",
+          "name": "Sosis Bakar",
+          "price": 10000,
+          "quantity": 2
+        },
+        {
+          "productId": "8",
+          "name": "Es Jeruk Peras",
+          "price": 10000,
+          "quantity": 2
+        }
+      ],
+      "subtotal": 40000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 40000,
+      "paymentMethod": "Tunai",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "POS",
+      "outletId": "out_1",
+      "estimatedPrepTime": 15,
+      "createdAt": "2026-07-03T19:50:00Z",
+      "cookedAt": "2026-07-08T14:55:04.956Z",
+      "deliveredAt": "2026-07-08T14:55:10.488Z"
+    },
+    {
+      "id": "ORD-20260703-503",
+      "queueNumber": "003",
+      "tableNumber": "12",
+      "customerName": "Self-Order Meja 12",
+      "items": [
+        {
+          "productId": "2",
+          "name": "Tahu Bakar",
+          "price": 8000,
+          "quantity": 1
+        },
+        {
+          "productId": "7",
+          "name": "Lemon Tea Soda",
+          "price": 10000,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 18000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 18000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "QR_SELF_ORDER",
+      "outletId": "out_1",
+      "estimatedPrepTime": 8,
+      "createdAt": "2026-07-03T19:42:00Z",
+      "deliveredAt": "2026-07-08T14:55:11.624Z"
+    },
+    {
+      "id": "ORD-20260708-521",
+      "queueNumber": "001",
+      "tableNumber": "5",
+      "customerId": "",
+      "customerName": "Pelanggan Umum",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 1,
+          "variation": "Original",
+          "modifiers": [],
+          "notes": ""
+        }
+      ],
+      "subtotal": 5000,
+      "tax": 0,
+      "serviceCharge": 250,
+      "discount": 0,
+      "total": 5250,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "QR_SELF_ORDER",
+      "outletId": "out_1",
+      "notes": "",
+      "estimatedPrepTime": 12,
+      "createdAt": "2026-07-08T14:28:55.122Z",
+      "cookedAt": "2026-07-08T14:55:06.657Z",
+      "deliveredAt": "2026-07-08T14:55:12.677Z"
+    },
+    {
+      "id": "ORD-20260708-632",
+      "queueNumber": "002",
+      "tableNumber": "5",
+      "customerId": "",
+      "customerName": "Pelanggan Umum",
+      "items": [
+        {
+          "productId": "1",
+          "name": "Bakso Bakar",
+          "price": 5000,
+          "quantity": 1,
+          "variation": "Original",
+          "modifiers": [],
+          "notes": ""
+        }
+      ],
+      "subtotal": 5000,
+      "tax": 0,
+      "serviceCharge": 0,
+      "discount": 0,
+      "total": 5000,
+      "paymentMethod": "QRIS",
+      "paymentStatus": "PAID",
+      "status": "DELIVERED",
+      "source": "QR_SELF_ORDER",
+      "outletId": "out_1",
+      "notes": "",
+      "estimatedPrepTime": 12,
+      "createdAt": "2026-07-08T14:54:44.861Z",
+      "cookedAt": "2026-07-08T14:55:14.046Z",
+      "deliveredAt": "2026-07-08T14:55:15.196Z"
+    }
+  ],
+  "stockMovements": [
+    {
+      "id": "m_1",
+      "inventoryId": "inv_1",
+      "type": "IN",
+      "quantity": 20,
+      "notes": "PO received",
+      "createdAt": "2026-07-01T10:00:00Z"
+    },
+    {
+      "id": "m_2",
+      "inventoryId": "inv_3",
+      "type": "WASTE",
+      "quantity": 2,
+      "notes": "Sosis rusak/hancur",
+      "createdAt": "2026-07-03T11:30:00Z"
+    }
+  ],
+  "attendances": [
+    {
+      "id": "att_1",
+      "employeeId": "emp_2",
+      "employeeName": "Sitti Saleha",
+      "date": "2026-07-03",
+      "clockIn": "13:45",
+      "status": "PRESENT"
+    },
+    {
+      "id": "att_2",
+      "employeeId": "emp_3",
+      "employeeName": "Junaedi Kasir",
+      "date": "2026-07-03",
+      "clockIn": "13:50",
+      "status": "PRESENT"
+    },
+    {
+      "id": "att_3",
+      "employeeId": "emp_4",
+      "employeeName": "Chef Daeng",
+      "date": "2026-07-03",
+      "clockIn": "13:40",
+      "status": "PRESENT"
+    },
+    {
+      "id": "att_4",
+      "employeeId": "emp_5",
+      "employeeName": "Gudang Daeng",
+      "date": "2026-07-03",
+      "clockIn": "14:05",
+      "status": "LATE"
+    }
+  ],
+  "payrolls": [
+    {
+      "id": "pay_1",
+      "employeeId": "emp_2",
+      "employeeName": "Sitti Saleha",
+      "month": "2026-06",
+      "baseSalary": 4500000,
+      "bonus": 300000,
+      "deductions": 0,
+      "totalPaid": 4800000,
+      "status": "PAID",
+      "paidAt": "2026-06-28T09:00:00Z"
+    },
+    {
+      "id": "pay_2",
+      "employeeId": "emp_3",
+      "employeeName": "Junaedi Kasir",
+      "month": "2026-06",
+      "baseSalary": 3000000,
+      "bonus": 150000,
+      "deductions": 50000,
+      "totalPaid": 3100000,
+      "status": "PAID",
+      "paidAt": "2026-06-28T09:10:00Z"
+    },
+    {
+      "id": "pay_3",
+      "employeeId": "emp_4",
+      "employeeName": "Chef Daeng",
+      "month": "2026-06",
+      "baseSalary": 3500000,
+      "bonus": 200000,
+      "deductions": 0,
+      "totalPaid": 3700000,
+      "status": "PAID",
+      "paidAt": "2026-06-28T09:15:00Z"
+    }
+  ],
+  "tables": [
+    { "id": "t_1", "number": "1", "capacity": 4, "status": "Kosong", "area": "Indoor" },
+    { "id": "t_2", "number": "2", "capacity": 4, "status": "Terisi", "area": "Indoor" },
+    { "id": "t_3", "number": "3", "capacity": 2, "status": "Kosong", "area": "Indoor" },
+    { "id": "t_4", "number": "4", "capacity": 6, "status": "Reservasi", "area": "VIP" },
+    { "id": "t_5", "number": "5", "capacity": 4, "status": "Dibersihkan", "area": "Indoor" },
+    { "id": "t_6", "number": "6", "capacity": 4, "status": "Kosong", "area": "Outdoor" },
+    { "id": "t_7", "number": "7", "capacity": 2, "status": "Terisi", "area": "Outdoor" },
+    { "id": "t_8", "number": "8", "capacity": 4, "status": "Kosong", "area": "Outdoor" },
+    { "id": "t_9", "number": "9", "capacity": 8, "status": "Kosong", "area": "VIP" },
+    { "id": "t_10", "number": "10", "capacity": 4, "status": "Kosong", "area": "Indoor" },
+    { "id": "t_11", "number": "11", "capacity": 4, "status": "Kosong", "area": "Indoor" },
+    { "id": "t_12", "number": "12", "capacity": 4, "status": "Kosong", "area": "Indoor" }
+  ],
+  "serviceChargePercent": 0,
+  "taxPercent": 0,
+  "storeProfile": {
+    "name": "Warung Daeng Soppeng",
+    "address": "Cikke'e, Jl. Salotungo, Soppeng",
+    "phone": "085342016403",
+    "googleMaps": "https://maps.google.com/?q=Warung+Daeng+Soppeng",
+    "instagram": "warung_daeng",
+    "tiktok": "jiradaengbaji",
+    "operationalHours": "14.00 - 20.00"
+  }
+}

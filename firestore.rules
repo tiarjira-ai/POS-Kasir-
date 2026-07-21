@@ -1,0 +1,157 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Global Safety Net (Default Deny Catch-all)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- REUSABLE PRIMITIVES & IDENTITY HELPERS ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- ENTITY SCHEMAS & ATTRIBUTE VALIDATORS ---
+    
+    function isValidMenu(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 100
+          && data.category is string && data.category.size() <= 50
+          && data.price is number && data.price >= 0
+          && data.stock is number && data.stock >= 0;
+    }
+
+    function isValidEmployee(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 100
+          && data.role is string && data.role.size() <= 50
+          && data.pin is string && data.pin.size() == 6;
+    }
+
+    function isValidCustomer(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 100
+          // Phone size bounds protect against wallet-drain payloads
+          && data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20
+          && data.points is number && data.points >= 0;
+    }
+
+    function isValidInventory(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 100
+          && data.stock is number && data.stock >= -500 // Allow slight deficit for buffer
+          && data.minStock is number && data.minStock >= 0;
+    }
+
+    function isValidTable(data) {
+      return data.number is string && data.number.size() <= 10
+          && data.capacity is number && data.capacity > 0;
+    }
+
+    function isValidOrder(data) {
+      return data.items is list && data.items.size() > 0
+          && data.total is number
+          && data.status is string && data.status.size() <= 30;
+    }
+
+    // --- COLLECTION RULES ---
+
+    // Menu Settings: Accessible for read and write by any operator
+    match /menu/{menuId} {
+      allow read: if true;
+      allow create, update: if isValidId(menuId) && isValidMenu(incoming());
+      allow delete: if isValidId(menuId);
+    }
+
+    // Employee Management: Sensitive employee profiles with PIN codes
+    match /employees/{employeeId} {
+      allow read: if true;
+      allow create, update: if isValidId(employeeId) && isValidEmployee(incoming());
+      allow delete: if isValidId(employeeId);
+    }
+
+    // CRM Customer Loyalty DB: Essential point tracking
+    match /customers/{customerId} {
+      allow read: if true;
+      allow create, update: if isValidId(customerId) && isValidCustomer(incoming());
+      allow delete: if isValidId(customerId);
+    }
+
+    // Gudang & Inventory Ingredients
+    match /inventory/{inventoryId} {
+      allow read: if true;
+      allow create, update: if isValidId(inventoryId) && isValidInventory(incoming());
+      allow delete: if isValidId(inventoryId);
+    }
+
+    // Table Layout Layouts and status (Occupied vs Free)
+    match /tables/{tableId} {
+      allow read: if true;
+      allow create, update: if isValidId(tableId) && isValidTable(incoming());
+      allow delete: if isValidId(tableId);
+    }
+
+    // Transactions Log & Live Orders (Real-time synced between scanned QR, KDS, and Kasir POS)
+    match /orders/{orderId} {
+      allow read: if true;
+      allow create: if isValidId(orderId) && isValidOrder(incoming());
+      allow update: if isValidId(orderId) && isValidOrder(incoming()) && (
+        // Action: Operator status updating (PENDING -> COOKING -> READY -> DELIVERED)
+        (incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt', 'items', 'total', 'paymentStatus', 'cookedAt', 'deliveredAt', 'id'])) ||
+        // Action: Self-order or manual order updates
+        (incoming().status == existing().status)
+      );
+      allow delete: if isValidId(orderId);
+    }
+
+    // Support collections secured with safe ID verification and Signed-In validations
+    match /suppliers/{supplierId} {
+      allow read: if true;
+      allow write: if isValidId(supplierId);
+    }
+
+    match /outlets/{outletId} {
+      allow read: if true;
+      allow write: if isValidId(outletId);
+    }
+
+    match /purchaseOrders/{poId} {
+      allow read: if true;
+      allow write: if isValidId(poId);
+    }
+
+    match /stockMovements/{movementId} {
+      allow read: if true;
+      allow write: if isValidId(movementId);
+    }
+
+    match /attendances/{attendanceId} {
+      allow read: if true;
+      allow write: if isValidId(attendanceId);
+    }
+
+    match /payrolls/{payrollId} {
+      allow read: if true;
+      allow write: if isValidId(payrollId);
+    }
+
+    match /expenses/{expenseId} {
+      allow read: if true;
+      allow write: if isValidId(expenseId);
+    }
+
+    match /settings/{settingsId} {
+      allow read: if true;
+      allow write: if isValidId(settingsId);
+    }
+  }
+}

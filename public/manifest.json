@@ -1,0 +1,28 @@
+{
+  "name": "Warung Daeng Soppeng Smart POS",
+  "short_name": "WDS POS",
+  "description": "Sistem POS pintar enterprise terintegrasi untuk Warung Daeng Soppeng. POS Kasir, KDS, Inventori Gudang, CRM, QR Self Order, dan Laporan Keuangan.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#10b981",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icon-512.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/icon-512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/icon-512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

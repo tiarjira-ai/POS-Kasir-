@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Warung Daeng Soppeng Smart POS",
+  "description": "Sistem POS pintar enterprise terintegrasi untuk Warung Daeng Soppeng. Menyediakan POS Kasir, KDS, Inventori Gudang, CRM, QR Self Order, dan Laporan Keuangan bertenaga AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #020617;
+  color: #e2e8f0;
+}
+
+/* Custom styling for scrollbars to keep POS screens ultra-slick */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+@media print {
+  /* Set document margin and hide other page ornaments */
+  @page {
+    margin: 1.6cm;
+    size: auto;
+  }
+  
+  /* Reset background and colors for pure print */
+  html, body {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Segoe UI', system-ui, sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Completely hide the main screen UI so only the portal is printed */
+  #root {
+    display: none !important;
+  }
+
+  /* Force display of the portal container */
+  #print-area {
+    display: block !important;
+    visibility: visible !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure standard background fills are kept on modern browers if supported */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+

@@ -1,0 +1,223 @@
+{
+  "entities": {
+    "Menu": {
+      "title": "Menu",
+      "description": "Daftar produk makanan, minuman, dan frozen food",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "integer" },
+        "image": { "type": "string" },
+        "stock": { "type": "integer" },
+        "minStock": { "type": "integer" },
+        "unit": { "type": "string" }
+      },
+      "required": ["name", "category", "price", "stock", "minStock", "unit"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "Data staff dan karyawan Warung Daeng Soppeng",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "salary": { "type": "integer" },
+        "pin": { "type": "string" },
+        "status": { "type": "string" },
+        "attendanceCount": { "type": "integer" }
+      },
+      "required": ["name", "role", "phone", "salary", "pin", "status"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Data pelanggan CRM / Loyalty Program",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "birthDate": { "type": "string" },
+        "points": { "type": "integer" },
+        "level": { "type": "string" },
+        "joinDate": { "type": "string" }
+      },
+      "required": ["name", "phone", "points", "level"]
+    },
+    "Inventory": {
+      "title": "Inventory",
+      "description": "Bahan baku penunjang di gudang pusat",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "stock": { "type": "integer" },
+        "minStock": { "type": "integer" },
+        "unit": { "type": "string" },
+        "category": { "type": "string" },
+        "lastUpdated": { "type": "string" },
+        "supplierName": { "type": "string" }
+      },
+      "required": ["name", "stock", "minStock", "unit", "category"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "Mitra penyuplai bahan baku utama",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" }
+      },
+      "required": ["name", "phone", "address"]
+    },
+    "Outlet": {
+      "title": "Outlet",
+      "description": "Cabang dan unit usaha Warung Daeng Soppeng",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["name", "address", "phone", "status"]
+    },
+    "PurchaseOrder": {
+      "title": "PurchaseOrder",
+      "description": "Surat pesanan belanja bahan baku ke supplier",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "items": { "type": "array" },
+        "total": { "type": "integer" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["supplierId", "supplierName", "items", "total", "status", "createdAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Laporan transaksi POS dan pesanan pelanggan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "items": { "type": "array" },
+        "total": { "type": "integer" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "tableNo": { "type": "string" },
+        "type": { "type": "string" },
+        "tax": { "type": "integer" },
+        "serviceCharge": { "type": "integer" },
+        "finalTotal": { "type": "integer" },
+        "paymentMethod": { "type": "string" },
+        "change": { "type": "integer" },
+        "pointsEarned": { "type": "integer" },
+        "pointsRedeemed": { "type": "integer" }
+      },
+      "required": ["items", "total", "status", "createdAt"]
+    },
+    "StockMovement": {
+      "title": "StockMovement",
+      "description": "Log riwayat mutasi stok",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "inventoryId": { "type": "string" },
+        "type": { "type": "string" },
+        "quantity": { "type": "integer" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "employeeName": { "type": "string" }
+      },
+      "required": ["inventoryId", "type", "quantity", "createdAt", "employeeName"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Log presensi kehadiran karyawan harian",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "employeeId": { "type": "string" },
+        "clockIn": { "type": "string" },
+        "clockOut": { "type": "string" },
+        "date": { "type": "string" },
+        "duration": { "type": "integer" },
+        "status": { "type": "string" }
+      },
+      "required": ["employeeId", "clockIn", "date", "status"]
+    },
+    "Payroll": {
+      "title": "Payroll",
+      "description": "Data slip gaji karyawan harian/bulanan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "employeeId": { "type": "string" },
+        "amount": { "type": "integer" },
+        "status": { "type": "string" },
+        "date": { "type": "string" }
+      },
+      "required": ["employeeId", "amount", "status", "date"]
+    }
+  },
+  "firestore": {
+    "menu/{menuId}": {
+      "schema": "Menu",
+      "description": "Koleksi menu makanan"
+    },
+    "employees/{employeeId}": {
+      "schema": "Employee",
+      "description": "Koleksi data karyawan"
+    },
+    "customers/{customerId}": {
+      "schema": "Customer",
+      "description": "Koleksi pelanggan CRM"
+    },
+    "inventory/{inventoryId}": {
+      "schema": "Inventory",
+      "description": "Koleksi bahan baku gudang"
+    },
+    "suppliers/{supplierId}": {
+      "schema": "Supplier",
+      "description": "Koleksi data penyuplai"
+    },
+    "outlets/{outletId}": {
+      "schema": "Outlet",
+      "description": "Koleksi cabang outlet"
+    },
+    "purchaseOrders/{poId}": {
+      "schema": "PurchaseOrder",
+      "description": "Koleksi pesanan pembelian PO"
+    },
+    "orders/{orderId}": {
+      "schema": "Order",
+      "description": "Koleksi pesanan POS"
+    },
+    "stockMovements/{movementId}": {
+      "schema": "StockMovement",
+      "description": "Koleksi riwayat mutasi stok"
+    },
+    "attendances/{attendanceId}": {
+      "schema": "Attendance",
+      "description": "Koleksi catatan kehadiran karyawan"
+    },
+    "payrolls/{payrollId}": {
+      "schema": "Payroll",
+      "description": "Koleksi slip gaji karyawan"
+    }
+  }
+}
