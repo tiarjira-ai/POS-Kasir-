@@ -190,6 +190,8 @@ async function initFirestore() {
         'attendances', 'payrolls', 'tables'
       ];
 
+      const initialData = readLocalDB();
+
       await Promise.all(collectionsToLoad.map(async (colName) => {
         const colRef = collection(firestoreDb, colName);
         const querySnap = await getDocs(colRef);
@@ -197,6 +199,18 @@ async function initFirestore() {
         querySnap.forEach((doc) => {
           dbData[colName].push({ id: doc.id, ...doc.data() });
         });
+
+        // If the collection is empty in Firestore, seed it from local fallback to guarantee active employees/menus
+        if (dbData[colName].length === 0 && initialData[colName] && initialData[colName].length > 0) {
+          console.log(`Collection ${colName} is empty in Firestore. Seeding default items...`);
+          dbData[colName] = initialData[colName];
+          // Background seed items to Firestore
+          for (const item of initialData[colName]) {
+            setDoc(doc(firestoreDb, colName, String(item.id)), item).catch((err) => {
+              console.error(`Error background seeding item ${item.id} in ${colName}:`, err);
+            });
+          }
+        }
       }));
 
       cachedDB = dbData;
@@ -489,7 +503,8 @@ app.post('/api/v1/auth/login', (req, res) => {
   }
 
   const db = readDB();
-  const employee = db.employees.find((emp: any) => emp.pin === pin && emp.status === 'ACTIVE');
+  const employees = db.employees || [];
+  const employee = employees.find((emp: any) => String(emp.pin) === String(pin) && emp.status === 'ACTIVE');
 
   if (!employee) {
     return res.status(401).json({ error: 'PIN Operator tidak valid atau tidak aktif' });
