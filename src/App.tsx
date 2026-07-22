@@ -382,7 +382,7 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-950 text-slate-200 flex flex-col font-sans overflow-y-auto">
       
       {/* Top Header Navigation Panel */}
       <header className="bg-slate-900 border-b border-slate-800 text-white px-4 py-3 md:px-6 md:py-4 flex justify-between items-center shadow-2xl relative z-50">
@@ -586,7 +586,7 @@ export default function App() {
       </AnimatePresence>
 
       {/* Main Frame Body: Left Rail Menu & Right Viewport */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-visible">
         
         {/* Left Navigation Menu Rail */}
         <nav className={`${sidebarCollapsed ? 'w-20 px-2' : 'w-64 p-4'} bg-slate-900/40 border-r border-slate-800/80 space-y-1.5 hidden md:flex flex-col justify-between overflow-y-auto shrink-0 transition-all duration-300 relative`}>
