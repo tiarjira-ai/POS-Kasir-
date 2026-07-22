@@ -4,11 +4,11 @@ import App from './App.tsx';
 import './index.css';
 import { handleClientApiRequest } from './lib/firebaseClientApi';
 
-// Transparent global fetch interceptor to solve Vercel/external hosting connectivity issues
+// Transparent global fetch interceptor to solve Vercel/Cloudflare Pages/external hosting connectivity issues
 try {
   const originalFetch = window.fetch;
-  const devBackend = 'https://ais-dev-awltrufj3vwffphxl6cpwr-1002434912097.asia-southeast1.run.app';
-  const preBackend = 'https://ais-pre-awltrufj3vwffphxl6cpwr-1002434912097.asia-southeast1.run.app';
+  const devBackend = 'https://ais-dev-gpb5ge5lxgcdgusmu53hvc-1002434912097.asia-southeast1.run.app';
+  const preBackend = 'https://ais-pre-gpb5ge5lxgcdgusmu53hvc-1002434912097.asia-southeast1.run.app';
   
   // Retrieve last known good backend from localStorage, default to devBackend
   let activeBackendUrl = devBackend;
@@ -46,15 +46,11 @@ try {
     }
   });
 
-  const interceptor = function (input: RequestInfo | URL, init?: RequestInit) {
+  const interceptor = async function (input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
     let urlStr = '';
-    let isRequestObject = false;
-    let requestObj: Request | null = null;
 
     if (input instanceof Request) {
       urlStr = input.url;
-      isRequestObject = true;
-      requestObj = input;
     } else if (input instanceof URL) {
       urlStr = input.toString();
     } else {
@@ -65,37 +61,47 @@ try {
     const isCloudRun = hostname.includes('run.app');
     const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
 
-    // If we are hosted on an external domain like Vercel or Cloudflare Workers
-    if (!isCloudRun && !isLocalhost) {
-      let isTargetApi = false;
-      let relativePath = '';
+    let isTargetApi = false;
+    let relativePath = '';
 
-      if (urlStr.startsWith('/') || !urlStr.startsWith('http')) {
-        // It's a relative path, e.g. "/api/v1/employees" or "api/v1/employees"
-        if (urlStr.includes('/api/v1/')) {
-          isTargetApi = true;
-          relativePath = urlStr.startsWith('/') ? urlStr : '/' + urlStr;
-        }
-      } else {
-        // It's an absolute path, check if it points to the current frontend host but contains the API path
-        try {
-          const parsedUrl = new URL(urlStr);
-          if (parsedUrl.origin === window.location.origin && parsedUrl.pathname.includes('/api/v1/')) {
-            isTargetApi = true;
-            relativePath = parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
-          }
-        } catch (e) {
-          // Handled safely
-        }
+    if (urlStr.startsWith('/') || !urlStr.startsWith('http')) {
+      if (urlStr.includes('/api/v1/')) {
+        isTargetApi = true;
+        relativePath = urlStr.startsWith('/') ? urlStr : '/' + urlStr;
       }
-
-      if (isTargetApi) {
-        console.log(`[Firebase Client Routing] Direct Firestore operation for: ${relativePath}`);
-        return handleClientApiRequest(relativePath, init);
+    } else {
+      try {
+        const parsedUrl = new URL(urlStr);
+        if (parsedUrl.pathname.includes('/api/v1/')) {
+          isTargetApi = true;
+          relativePath = parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
+        }
+      } catch (e) {
+        // Handled safely
       }
     }
 
-    return originalFetch(input, init);
+    // On Cloudflare Pages, Workers, Vercel or external domains (!isCloudRun && !isLocalhost)
+    if (!isCloudRun && !isLocalhost && isTargetApi) {
+      console.log(`[Firebase Client Routing] Direct operation for: ${relativePath}`);
+      return handleClientApiRequest(relativePath, init);
+    }
+
+    // On CloudRun or Localhost, attempt original fetch, but fallback to client API if server returns 404 or fails
+    try {
+      const res = await originalFetch(input, init);
+      if (isTargetApi && res.status === 404) {
+        console.log(`[API Proxy] Backend returned 404 for ${relativePath}, falling back to Client API`);
+        return handleClientApiRequest(relativePath, init);
+      }
+      return res;
+    } catch (err) {
+      if (isTargetApi) {
+        console.warn(`[API Proxy] Fetch failed for ${relativePath}, falling back to Client API:`, err);
+        return handleClientApiRequest(relativePath, init);
+      }
+      throw err;
+    }
   };
 
   try {
