@@ -418,7 +418,7 @@ export default function GudangInventori() {
                 <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Catatan Keterangan</label>
                 <input 
                   type="text" 
-                  value={adjustNote}
+                  value={adjustNote || ''}
                   onChange={(e) => setAdjustNote(e.target.value)}
                   placeholder="Contoh: Pengiriman PO gagal, buah busuk..."
                   className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500"
@@ -457,7 +457,7 @@ export default function GudangInventori() {
                 <input 
                   type="text" 
                   required
-                  value={newInv.name}
+                  value={newInv.name || ''}
                   onChange={(e) => setNewInv(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="Contoh: Saus Pedas Soppeng"
                   className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 font-bold focus:outline-none focus:border-emerald-500"
@@ -470,7 +470,7 @@ export default function GudangInventori() {
                   <input 
                     type="text" 
                     required
-                    value={newInv.category}
+                    value={newInv.category || ''}
                     onChange={(e) => setNewInv(prev => ({ ...prev, category: e.target.value }))}
                     placeholder="Tahu, Daging, Rempah..."
                     className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 font-bold focus:outline-none focus:border-emerald-500"
@@ -481,7 +481,7 @@ export default function GudangInventori() {
                   <input 
                     type="text" 
                     required
-                    value={newInv.unit}
+                    value={newInv.unit || ''}
                     onChange={(e) => setNewInv(prev => ({ ...prev, unit: e.target.value }))}
                     placeholder="Kg, Pcs, Gelas..."
                     className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 font-bold focus:outline-none focus:border-emerald-500"
@@ -517,7 +517,7 @@ export default function GudangInventori() {
               <div>
                 <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Supplier Terkait</label>
                 <select
-                  value={newInv.supplierName}
+                  value={newInv.supplierName || ''}
                   onChange={(e) => setNewInv(prev => ({ ...prev, supplierName: e.target.value }))}
                   className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3 py-2.5 text-slate-200 focus:outline-none focus:border-emerald-500 font-bold"
                 >

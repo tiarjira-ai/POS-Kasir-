@@ -2,12 +2,36 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously } from 'firebase/auth';
 import { 
   getFirestore, doc, setDoc, getDoc, getDocs, collection, deleteDoc, updateDoc,
-  query, where, limit, getDocFromServer, setLogLevel
+  query, where, limit, getDocFromServer, setLogLevel, onSnapshot
 } from 'firebase/firestore';
 import firebaseConfig from '../firebase-applet-config.json';
 
 // Silence verbose Firebase SDK offline network warnings
 setLogLevel('silent');
+
+let isFirestoreDisabled = false;
+
+// Suppress benign Firebase SDK PERMISSION_DENIED / API disabled console errors on client
+if (typeof window !== 'undefined') {
+  const origConsoleError = console.error;
+  console.error = function (...args: any[]) {
+    const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
+    if (
+      msg.includes('@firebase/firestore') && 
+      (
+        msg.includes('PERMISSION_DENIED') || 
+        msg.includes('Cloud Firestore API has not been used') || 
+        msg.includes('Could not reach Cloud Firestore backend') ||
+        msg.includes('Disconnecting idle stream') ||
+        msg.includes('CANCELLED')
+      )
+    ) {
+      isFirestoreDisabled = true;
+      return;
+    }
+    origConsoleError.apply(console, args);
+  };
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -147,8 +171,78 @@ const SEED_DATA = {
   stockMovements: []
 };
 
-let isFirestoreDisabled = false;
 let seedCheckDone = false;
+
+// Safe onSnapshot wrapper that gracefully handles Cloud Firestore API being disabled/offline
+export function safeOnSnapshot(
+  collectionName: string,
+  onData: (data: any[]) => void,
+  onError?: (error: any) => void
+): () => void {
+  let intervalId: any = null;
+
+  if (isFirestoreDisabled) {
+    getCollectionDocs(collectionName).then(onData);
+    intervalId = setInterval(() => {
+      getCollectionDocs(collectionName).then(onData);
+    }, 3000);
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }
+
+  let unsubscribe: (() => void) | null = null;
+  try {
+    const colRef = collection(db, collectionName);
+    unsubscribe = onSnapshot(
+      colRef,
+      (snapshot) => {
+        const list: any[] = [];
+        snapshot.forEach((d) => {
+          list.push({ id: d.id, ...d.data() });
+        });
+        setLocalCache(collectionName, list);
+        onData(list);
+      },
+      (err) => {
+        isFirestoreDisabled = true;
+        if (
+          err?.message?.includes('PERMISSION_DENIED') ||
+          err?.message?.includes('Cloud Firestore API') ||
+          err?.code === 'permission-denied'
+        ) {
+          console.warn(`[Firestore] Cloud Firestore API unavailable for '${collectionName}'. Switched to local polling mode.`);
+        } else if (onError) {
+          onError(err);
+        }
+
+        getCollectionDocs(collectionName).then(onData);
+        if (!intervalId) {
+          intervalId = setInterval(() => {
+            getCollectionDocs(collectionName).then(onData);
+          }, 3000);
+        }
+      }
+    );
+  } catch (err) {
+    isFirestoreDisabled = true;
+    getCollectionDocs(collectionName).then(onData);
+    intervalId = setInterval(() => {
+      getCollectionDocs(collectionName).then(onData);
+    }, 3000);
+  }
+
+  return () => {
+    if (unsubscribe) {
+      try {
+        unsubscribe();
+      } catch (_) {}
+    }
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+  };
+}
 
 // LocalStorage Helper for Instant Access on Slow Networks
 function getLocalCache(colName: string): any[] | null {

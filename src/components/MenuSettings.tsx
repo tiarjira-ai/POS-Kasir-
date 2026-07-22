@@ -369,7 +369,7 @@ export default function MenuSettings() {
                 <input 
                   type="text" 
                   required
-                  value={formData.name}
+                  value={formData.name || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="Contoh: Bakso Ayam Bakar"
                   className="w-full bg-slate-50 border border-slate-150 rounded-xl px-3.5 py-2.5 font-bold"
@@ -380,7 +380,7 @@ export default function MenuSettings() {
                 <div>
                   <label className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Kategori</label>
                   <select
-                    value={formData.category}
+                    value={formData.category || 'Makanan'}
                     onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value as any }))}
                     className="w-full bg-slate-50 border border-slate-150 rounded-xl px-3 py-2.5 font-bold text-slate-700"
                   >
@@ -419,7 +419,7 @@ export default function MenuSettings() {
                   <input 
                     type="text" 
                     required
-                    value={formData.unit}
+                    value={formData.unit || ''}
                     onChange={(e) => setFormData(prev => ({ ...prev, unit: e.target.value }))}
                     placeholder="Tusuk, Pcs, Gelas, Pack..."
                     className="w-full bg-slate-50 border border-slate-150 rounded-xl px-3.5 py-2.5 font-bold"

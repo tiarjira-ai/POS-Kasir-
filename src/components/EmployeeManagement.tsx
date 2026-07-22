@@ -977,7 +977,7 @@ export default function EmployeeManagement() {
                 <input 
                   type="text" 
                   required
-                  value={editFormData.name}
+                  value={editFormData.name || ''}
                   onChange={(e) => setEditFormData(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="Contoh: Andi Wijaya"
                   className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 placeholder:text-slate-650 focus:outline-none focus:border-emerald-500 font-bold"
@@ -1018,7 +1018,7 @@ export default function EmployeeManagement() {
                   <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">No. Handphone</label>
                   <input 
                     type="text" 
-                    value={editFormData.phone}
+                    value={editFormData.phone || ''}
                     onChange={(e) => setEditFormData(prev => ({ ...prev, phone: e.target.value }))}
                     placeholder="0812xxxx"
                     className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 placeholder:text-slate-650 focus:outline-none focus:border-emerald-500 font-bold"
@@ -1030,7 +1030,7 @@ export default function EmployeeManagement() {
                     type="text" 
                     required
                     maxLength={6}
-                    value={editFormData.pin}
+                    value={editFormData.pin || ''}
                     onChange={(e) => setEditFormData(prev => ({ ...prev, pin: e.target.value }))}
                     placeholder="123456"
                     className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 font-mono text-center tracking-widest font-black focus:outline-none focus:border-emerald-500"
@@ -1053,7 +1053,7 @@ export default function EmployeeManagement() {
               <div>
                 <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Alamat Tempat Tinggal</label>
                 <textarea 
-                  value={editFormData.address}
+                  value={editFormData.address || ''}
                   onChange={(e) => setEditFormData(prev => ({ ...prev, address: e.target.value }))}
                   placeholder="Nama jalan, nomor rumah, kecamatan..."
                   rows={2}

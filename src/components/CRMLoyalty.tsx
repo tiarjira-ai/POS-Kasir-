@@ -363,7 +363,7 @@ export default function CRMLoyalty() {
                 <input 
                   type="text" 
                   required
-                  value={formData.name}
+                  value={formData.name || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                   placeholder="Contoh: Muhammad Yusuf"
                   className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 font-bold focus:outline-none focus:border-emerald-500"
@@ -375,7 +375,7 @@ export default function CRMLoyalty() {
                 <input 
                   type="text" 
                   required
-                  value={formData.phone}
+                  value={formData.phone || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                   placeholder="Contoh: 085342016403"
                   className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 font-mono font-bold focus:outline-none focus:border-emerald-500"
@@ -386,7 +386,7 @@ export default function CRMLoyalty() {
                 <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Alamat Email</label>
                 <input 
                   type="email" 
-                  value={formData.email}
+                  value={formData.email || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                   placeholder="Contoh: yusuf@gmail.com"
                   className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500"
@@ -396,7 +396,7 @@ export default function CRMLoyalty() {
               <div>
                 <label className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Tingkatan Level</label>
                 <select
-                  value={formData.level}
+                  value={formData.level || 'Bronze'}
                   onChange={(e) => setFormData(prev => ({ ...prev, level: e.target.value as any }))}
                   className="w-full bg-[#1E293B] border border-slate-800 rounded-xl px-3 py-2.5 font-bold text-slate-200 focus:outline-none focus:border-emerald-500"
                 >

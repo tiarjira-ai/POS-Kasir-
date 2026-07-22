@@ -45,7 +45,23 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
       const res = await fetch('/api/v1/settings');
       if (res.ok) {
         const data = await res.json();
-        setSettings(data);
+        setSettings({
+          serviceChargePercent: data?.serviceChargePercent ?? 0,
+          taxPercent: data?.taxPercent ?? 0,
+          currency: data?.currency || 'Rupiah',
+          timezone: data?.timezone || 'WITA (UTC+8)',
+          storeProfile: {
+            name: data?.storeProfile?.name || '',
+            logo: data?.storeProfile?.logo || '',
+            address: data?.storeProfile?.address || '',
+            phone: data?.storeProfile?.phone || '',
+            googleMaps: data?.storeProfile?.googleMaps || '',
+            instagram: data?.storeProfile?.instagram || '',
+            tiktok: data?.storeProfile?.tiktok || '',
+            operationalHours: data?.storeProfile?.operationalHours || '',
+            categories: data?.storeProfile?.categories || ['Makanan', 'Minuman', 'Frozen Food']
+          }
+        });
       } else {
         setErrorMsg('Gagal mengambil pengaturan usaha.');
       }
@@ -197,7 +213,7 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
               <div className="relative">
                 <input 
                   type="text" 
-                  value={settings.storeProfile.name}
+                  value={settings.storeProfile?.name || ''}
                   onChange={(e) => handleProfileChange('name', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   required
@@ -212,7 +228,7 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
               <div className="relative">
                 <input 
                   type="text" 
-                  value={settings.storeProfile.logo}
+                  value={settings.storeProfile?.logo || ''}
                   onChange={(e) => handleProfileChange('logo', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   required
@@ -226,7 +242,7 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
               <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Alamat Lengkap Gerai</label>
               <div className="relative">
                 <textarea 
-                  value={settings.storeProfile.address}
+                  value={settings.storeProfile?.address || ''}
                   onChange={(e) => handleProfileChange('address', e.target.value)}
                   rows={2}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
@@ -242,7 +258,7 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
               <div className="relative">
                 <input 
                   type="text" 
-                  value={settings.storeProfile.googleMaps}
+                  value={settings.storeProfile?.googleMaps || ''}
                   onChange={(e) => handleProfileChange('googleMaps', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   required
@@ -257,7 +273,7 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
               <div className="relative">
                 <input 
                   type="text" 
-                  value={settings.storeProfile.phone}
+                  value={settings.storeProfile?.phone || ''}
                   onChange={(e) => handleProfileChange('phone', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   required
@@ -272,7 +288,7 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
               <div className="relative">
                 <input 
                   type="text" 
-                  value={settings.storeProfile.instagram}
+                  value={settings.storeProfile?.instagram || ''}
                   onChange={(e) => handleProfileChange('instagram', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   placeholder="@username"
@@ -287,7 +303,7 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
               <div className="relative">
                 <input 
                   type="text" 
-                  value={settings.storeProfile.tiktok}
+                  value={settings.storeProfile?.tiktok || ''}
                   onChange={(e) => handleProfileChange('tiktok', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   placeholder="@username"
@@ -302,7 +318,7 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
               <div className="relative">
                 <input 
                   type="text" 
-                  value={settings.storeProfile.operationalHours}
+                  value={settings.storeProfile?.operationalHours || ''}
                   onChange={(e) => handleProfileChange('operationalHours', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   required

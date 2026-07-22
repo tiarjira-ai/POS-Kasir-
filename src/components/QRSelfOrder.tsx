@@ -160,7 +160,7 @@ export default function QRSelfOrder({ isCustomerMode = false, tableNum = '' }: Q
       });
       console.log('[System Log] Error logged successfully to Firestore collection.');
     } catch (logErr) {
-      console.error('[System Log] Failed to record error log inside Firestore:', logErr);
+      console.warn('[System Log] Failed to record error log inside Firestore (Firestore offline/disabled):', logErr);
     }
   };
 

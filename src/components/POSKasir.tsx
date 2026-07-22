@@ -8,8 +8,7 @@ import {
   Coffee
 } from 'lucide-react';
 import { MenuItem, CartItem, Customer, PaymentMethod, Order, Table } from '../types';
-import { db } from '../lib/firebaseClientApi';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { db, safeOnSnapshot } from '../lib/firebaseClientApi';
 
 interface POSKasirProps {
   userSession: { id: string; name: string; role: string; token: string };
@@ -147,43 +146,26 @@ export default function POSKasir({ userSession }: POSKasirProps) {
     fetchData();
 
     // Subscribe to real-time orders list
-    const unsubscribeOrders = onSnapshot(collection(db, 'orders'), (snapshot) => {
-      const list: Order[] = [];
-      snapshot.forEach((doc) => {
-        list.push({ id: doc.id, ...doc.data() } as Order);
-      });
-      // Sort descending by createdAt
+    const unsubscribeOrders = safeOnSnapshot('orders', (data: Order[]) => {
+      const list = [...data];
       list.sort((a, b) => {
         const tA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
         const tB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
         return tB - tA;
       });
       setOrders(list);
-    }, (error) => {
-      console.error('POS orders live subscribe error:', error);
     });
 
     // Subscribe to real-time tables status
-    const unsubscribeTables = onSnapshot(collection(db, 'tables'), (snapshot) => {
-      const list: Table[] = [];
-      snapshot.forEach((doc) => {
-        list.push({ id: doc.id, ...doc.data() } as Table);
-      });
+    const unsubscribeTables = safeOnSnapshot('tables', (data: Table[]) => {
+      const list = [...data];
       list.sort((a, b) => Number(a.number) - Number(b.number));
       setTables(list);
-    }, (error) => {
-      console.error('POS tables live subscribe error:', error);
     });
 
     // Subscribe to real-time menu items
-    const unsubscribeMenu = onSnapshot(collection(db, 'menu'), (snapshot) => {
-      const list: MenuItem[] = [];
-      snapshot.forEach((doc) => {
-        list.push({ id: doc.id, ...doc.data() } as MenuItem);
-      });
-      setMenu(list);
-    }, (error) => {
-      console.error('POS menu live subscribe error:', error);
+    const unsubscribeMenu = safeOnSnapshot('menu', (data: MenuItem[]) => {
+      setMenu(data);
     });
 
     return () => {
@@ -892,7 +874,7 @@ export default function POSKasir({ userSession }: POSKasirProps) {
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-500" />
                 <input 
                   type="text" 
-                  value={searchQuery}
+                  value={searchQuery || ''}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Cari menu bakso, sosis, teh..." 
                   className="w-full bg-slate-950 pl-10 pr-4 py-2.5 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-emerald-500 border border-slate-800 text-slate-100 placeholder-slate-500"
@@ -1594,7 +1576,7 @@ export default function POSKasir({ userSession }: POSKasirProps) {
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2 font-mono">Catatan Pesanan</span>
               <input 
                 type="text" 
-                value={customNotes}
+                value={customNotes || ''}
                 onChange={(e) => setCustomNotes(e.target.value)}
                 placeholder="Contoh: Saus dipisah, agak kering..."
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
@@ -1694,7 +1676,7 @@ export default function POSKasir({ userSession }: POSKasirProps) {
                       <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block mb-1 font-mono">Diterima (Tunai)</label>
                       <input 
                         type="number" 
-                        value={cashAmountPaid}
+                        value={cashAmountPaid || ''}
                         onChange={(e) => setCashAmountPaid(e.target.value)}
                         placeholder="Contoh: 50000"
                         className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white font-bold focus:outline-none"

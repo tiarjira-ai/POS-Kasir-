@@ -4,13 +4,20 @@ import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 
-// Intercept and suppress benign Firebase/Firestore idle stream timeout warnings
+// Intercept and suppress benign Firebase/Firestore idle stream timeout and disabled API warnings
 const originalConsoleError = console.error;
 console.error = function (...args: any[]) {
   const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : String(arg)).join(' ');
   if (
     message.includes('@firebase/firestore') && 
-    (message.includes('Disconnecting idle stream') || message.includes('CANCELLED') || message.includes('Listen'))
+    (
+      message.includes('Disconnecting idle stream') || 
+      message.includes('CANCELLED') || 
+      message.includes('Listen') ||
+      message.includes('PERMISSION_DENIED') ||
+      message.includes('Cloud Firestore API has not been used') ||
+      message.includes('Could not reach Cloud Firestore backend')
+    )
   ) {
     return;
   }

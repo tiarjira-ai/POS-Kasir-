@@ -411,7 +411,7 @@ export default function OutletManagement() {
                 <input 
                   type="text" 
                   placeholder="Contoh: Cabang Cangadi Soppeng"
-                  value={formData.name}
+                  value={formData.name || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-300 placeholder-slate-700 focus:outline-none focus:border-emerald-500"
                   required
@@ -422,7 +422,7 @@ export default function OutletManagement() {
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5 font-mono">Alamat Lengkap</label>
                 <textarea 
                   placeholder="Contoh: Jl. Poros Makassar, Cangadi, Liliriaja, Soppeng"
-                  value={formData.address}
+                  value={formData.address || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-300 placeholder-slate-700 focus:outline-none focus:border-emerald-500 min-h-20 max-h-32"
                   required
@@ -434,7 +434,7 @@ export default function OutletManagement() {
                 <input 
                   type="text" 
                   placeholder="Contoh: 08534201xxxx"
-                  value={formData.phone}
+                  value={formData.phone || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-300 placeholder-slate-700 focus:outline-none focus:border-emerald-500 font-mono"
                   required
@@ -517,7 +517,7 @@ export default function OutletManagement() {
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5 font-mono">Nama Cabang / Outlet</label>
                 <input 
                   type="text" 
-                  value={formData.name}
+                  value={formData.name || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-300 focus:outline-none focus:border-emerald-500"
                   required
@@ -527,7 +527,7 @@ export default function OutletManagement() {
               <div>
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5 font-mono">Alamat Lengkap</label>
                 <textarea 
-                  value={formData.address}
+                  value={formData.address || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-300 focus:outline-none focus:border-emerald-500 min-h-20 max-h-32"
                   required
@@ -538,7 +538,7 @@ export default function OutletManagement() {
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5 font-mono">Nomor Telepon / Kontak</label>
                 <input 
                   type="text" 
-                  value={formData.phone}
+                  value={formData.phone || ''}
                   onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-300 focus:outline-none focus:border-emerald-500 font-mono"
                   required

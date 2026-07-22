@@ -4,8 +4,7 @@ import {
   Clock, AlertCircle, RefreshCw, Volume2 
 } from 'lucide-react';
 import { Order } from '../types';
-import { db } from '../lib/firebaseClientApi';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { db, safeOnSnapshot } from '../lib/firebaseClientApi';
 
 export default function KDSView() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -13,13 +12,8 @@ export default function KDSView() {
   const previousCountRef = useRef(0);
 
   useEffect(() => {
-    // Real-time Firestore subscription for instantaneous Kitchen Display System updates
-    const unsubscribe = onSnapshot(collection(db, 'orders'), (snapshot) => {
-      const allOrders: Order[] = [];
-      snapshot.forEach((doc) => {
-        allOrders.push({ id: doc.id, ...doc.data() } as Order);
-      });
-      
+    // Real-time subscription for instantaneous Kitchen Display System updates
+    const unsubscribe = safeOnSnapshot('orders', (allOrders: Order[]) => {
       const activeOrders = allOrders
         .filter(o => ['PENDING', 'COOKING', 'READY'].includes(o.status))
         .sort((a, b) => {
@@ -35,9 +29,6 @@ export default function KDSView() {
         playKitchenChime();
       }
       previousCountRef.current = activeOrders.length;
-    }, (error) => {
-      console.error('KDS real-time subscription failed:', error);
-      fetchActiveOrders();
     });
 
     return () => unsubscribe();
