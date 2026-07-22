@@ -145,6 +145,28 @@ const SEED_DATA = {
 let isFirestoreDisabled = false;
 let seedCheckDone = false;
 
+// LocalStorage Helper for Instant Access on Slow Networks
+function getLocalCache(colName: string): any[] | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(`wdspos_cache_${colName}`);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (_) {}
+  return null;
+}
+
+function setLocalCache(colName: string, data: any[]) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(`wdspos_cache_${colName}`, JSON.stringify(data));
+  } catch (_) {}
+}
+
 async function seedCollectionIfEmpty(colName: string, items: any[]) {
   if (isFirestoreDisabled) return;
   try {
@@ -206,24 +228,39 @@ async function ensureSeedAndSettings() {
 
 async function getCollectionDocs(colName: string): Promise<any[]> {
   const fallback = SEED_DATA[colName as keyof typeof SEED_DATA] || [];
+  const localCached = getLocalCache(colName);
+  const initialData = (localCached && localCached.length > 0) ? localCached : fallback;
+
   if (isFirestoreDisabled) {
-    return fallback;
+    return initialData;
   }
 
   try {
-    const snap = await getDocs(collection(db, colName));
-    const list: any[] = [];
-    snap.forEach((d) => {
-      list.push({ id: d.id, ...d.data() });
+    // Fast Timeout wrapper (1000ms) to ensure instant UI response on slow/intermittent networks
+    const fetchPromise = (async () => {
+      const snap = await getDocs(collection(db, colName));
+      const list: any[] = [];
+      snap.forEach((d) => {
+        list.push({ id: d.id, ...d.data() });
+      });
+
+      if (list.length > 0) {
+        setLocalCache(colName, list);
+        return list;
+      }
+      return initialData;
+    })();
+
+    const timeoutPromise = new Promise<any[]>((resolve) => {
+      setTimeout(() => {
+        resolve(initialData);
+      }, 1000);
     });
 
-    if (list.length === 0 && fallback.length > 0) {
-      return fallback;
-    }
-    return list;
+    return await Promise.race([fetchPromise, timeoutPromise]);
   } catch (err) {
-    console.warn(`Firestore query failed for ${colName}, using fallback data:`, err);
-    return fallback;
+    console.warn(`Firestore query failed for ${colName}, using cached/fallback data:`, err);
+    return initialData;
   }
 }
 
@@ -817,35 +854,79 @@ export async function handleClientApiRequest(url: string, init?: RequestInit): P
         if (method === 'POST') {
           const newId = body.id || `${colName}_${Date.now()}`;
           const newDoc = { id: newId, ...body };
-          await setDoc(doc(db, colName, String(newId)), newDoc);
-          return new Response(JSON.stringify(newDoc), { status: 201 });
+
+          // Optimistically update local cache immediately for instant UI on slow internet
+          const existingList = (getLocalCache(colName) || SEED_DATA[colName as keyof typeof SEED_DATA] || []).slice();
+          const existingIdx = existingList.findIndex((item: any) => String(item.id) === String(newId));
+          if (existingIdx >= 0) {
+            existingList[existingIdx] = newDoc;
+          } else {
+            existingList.unshift(newDoc);
+          }
+          setLocalCache(colName, existingList);
+
+          // Non-blocking Firestore write
+          try {
+            setDoc(doc(db, colName, String(newId)), newDoc).catch(e => console.warn('Background Firestore write delayed:', e));
+          } catch (_) {}
+
+          return new Response(JSON.stringify(newDoc), { status: 201, headers: { 'Content-Type': 'application/json' } });
         }
       } else {
         const docRef = doc(db, colName, docId);
         
         // GET DOCUMENT SINGLE
         if (method === 'GET') {
-          const snap = await getDoc(docRef);
-          if (!snap.exists()) {
+          const existingList = getLocalCache(colName) || [];
+          const foundLocal = existingList.find((item: any) => String(item.id) === String(docId));
+          if (foundLocal) {
+            return new Response(JSON.stringify(foundLocal), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          }
+
+          try {
+            const snap = await getDoc(docRef);
+            if (!snap.exists()) {
+              return new Response(JSON.stringify({ error: 'Document not found' }), { status: 404 });
+            }
+            return new Response(JSON.stringify({ id: snap.id, ...snap.data() }), { status: 200 });
+          } catch (e) {
             return new Response(JSON.stringify({ error: 'Document not found' }), { status: 404 });
           }
-          return new Response(JSON.stringify({ id: snap.id, ...snap.data() }), { status: 200 });
         }
         
         // UPDATE DOCUMENT SINGLE
         if (method === 'PUT') {
-          const snap = await getDoc(docRef);
-          if (!snap.exists()) {
-            return new Response(JSON.stringify({ error: 'Document not found' }), { status: 404 });
+          const existingList = (getLocalCache(colName) || SEED_DATA[colName as keyof typeof SEED_DATA] || []).slice();
+          const existingIdx = existingList.findIndex((item: any) => String(item.id) === String(docId));
+          const existingData = existingIdx >= 0 ? existingList[existingIdx] : {};
+          const updatedDoc = { ...existingData, ...body, id: docId };
+
+          if (existingIdx >= 0) {
+            existingList[existingIdx] = updatedDoc;
+          } else {
+            existingList.unshift(updatedDoc);
           }
-          const updatedDoc = { ...snap.data(), ...body, id: docId };
-          await setDoc(docRef, updatedDoc, { merge: true });
-          return new Response(JSON.stringify(updatedDoc), { status: 200 });
+          setLocalCache(colName, existingList);
+
+          // Non-blocking Firestore write
+          try {
+            setDoc(docRef, updatedDoc, { merge: true }).catch(e => console.warn('Background Firestore update delayed:', e));
+          } catch (_) {}
+
+          return new Response(JSON.stringify(updatedDoc), { status: 200, headers: { 'Content-Type': 'application/json' } });
         }
         
         // DELETE DOCUMENT SINGLE
         if (method === 'DELETE') {
-          await deleteDoc(docRef);
+          const existingList = (getLocalCache(colName) || []).slice();
+          const filtered = existingList.filter((item: any) => String(item.id) !== String(docId));
+          setLocalCache(colName, filtered);
+
+          // Non-blocking Firestore delete
+          try {
+            deleteDoc(docRef).catch(e => console.warn('Background Firestore delete delayed:', e));
+          } catch (_) {}
+
           return new Response(JSON.stringify({ success: true, message: 'Deleted successfully' }), { status: 200 });
         }
       }

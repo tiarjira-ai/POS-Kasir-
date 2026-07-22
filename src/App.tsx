@@ -3,7 +3,7 @@ import {
   LogOut, ShieldAlert, Sparkles, LayoutDashboard, ShoppingCart, 
   UtensilsCrossed, Package, Settings, BarChart2, Users, QrCode, ClipboardList,
   Menu, X, Store, Sliders, ChevronLeft, ChevronRight,
-  Download, Smartphone, Monitor, CheckCircle
+  Download, Smartphone, Monitor, CheckCircle, Wifi, WifiOff
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -78,6 +78,20 @@ export default function App() {
   const [storeProfile, setStoreProfile] = useState<any>({ name: 'Warung Daeng Soppeng' });
   const [showQuickAccess, setShowQuickAccess] = useState(false);
   const [headerClickCount, setHeaderClickCount] = useState(0);
+  const [isOnline, setIsOnline] = useState<boolean>(() => typeof navigator !== 'undefined' ? navigator.onLine : true);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const handleHeaderLogoClick = () => {
     const nextCount = headerClickCount + 1;
@@ -387,15 +401,34 @@ export default function App() {
             </div>
           </div>
 
-          {/* Real-time Clock Pill */}
-          <div className="hidden sm:flex bg-slate-950/60 border border-slate-800/80 px-3 py-1 md:py-1.5 rounded-xl flex items-center gap-2 md:gap-2.5 shadow-inner shrink-0">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-            </span>
-            <div className="flex flex-col text-left">
-              <span className="text-[11px] md:text-xs font-black font-mono tracking-wider text-slate-100 leading-tight">{formattedTime} WITA</span>
-              <span className="text-[8px] text-slate-400 font-extrabold uppercase tracking-wider leading-none mt-0.5">{formattedDate}</span>
+          {/* Real-time Clock & Network Pill */}
+          <div className="hidden sm:flex bg-slate-950/60 border border-slate-800/80 px-3 py-1 md:py-1.5 rounded-xl items-center gap-3 shadow-inner shrink-0">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+              </span>
+              <div className="flex flex-col text-left">
+                <span className="text-[11px] md:text-xs font-black font-mono tracking-wider text-slate-100 leading-tight">{formattedTime} WITA</span>
+                <span className="text-[8px] text-slate-400 font-extrabold uppercase tracking-wider leading-none mt-0.5">{formattedDate}</span>
+              </div>
+            </div>
+
+            <div className="h-4 w-px bg-slate-800" />
+
+            {/* Offline-first / Connection Status Indicator */}
+            <div className="flex items-center gap-1.5 text-[10px] font-bold" title={isOnline ? "Koneksi Aktif - Mode Cepat" : "Koneksi Lambat/Offline - Menggunakan Cache Lokal (Lancar & Ringan)"}>
+              {isOnline ? (
+                <span className="flex items-center gap-1 text-emerald-400">
+                  <Wifi className="w-3 h-3" />
+                  <span className="hidden lg:inline font-mono">ONLINE</span>
+                </span>
+              ) : (
+                <span className="flex items-center gap-1 text-amber-400">
+                  <WifiOff className="w-3 h-3 animate-pulse" />
+                  <span className="font-mono">OFFLINE (CACHE LOKAL)</span>
+                </span>
+              )}
             </div>
           </div>
         </div>
