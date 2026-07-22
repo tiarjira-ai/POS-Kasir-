@@ -2342,28 +2342,108 @@
     }
   ],
   "tables": [
-    { "id": "t_1", "number": "1", "capacity": 4, "status": "Kosong", "area": "Indoor" },
-    { "id": "t_2", "number": "2", "capacity": 4, "status": "Terisi", "area": "Indoor" },
-    { "id": "t_3", "number": "3", "capacity": 2, "status": "Kosong", "area": "Indoor" },
-    { "id": "t_4", "number": "4", "capacity": 6, "status": "Reservasi", "area": "VIP" },
-    { "id": "t_5", "number": "5", "capacity": 4, "status": "Dibersihkan", "area": "Indoor" },
-    { "id": "t_6", "number": "6", "capacity": 4, "status": "Kosong", "area": "Outdoor" },
-    { "id": "t_7", "number": "7", "capacity": 2, "status": "Terisi", "area": "Outdoor" },
-    { "id": "t_8", "number": "8", "capacity": 4, "status": "Kosong", "area": "Outdoor" },
-    { "id": "t_9", "number": "9", "capacity": 8, "status": "Kosong", "area": "VIP" },
-    { "id": "t_10", "number": "10", "capacity": 4, "status": "Kosong", "area": "Indoor" },
-    { "id": "t_11", "number": "11", "capacity": 4, "status": "Kosong", "area": "Indoor" },
-    { "id": "t_12", "number": "12", "capacity": 4, "status": "Kosong", "area": "Indoor" }
+    {
+      "id": "t_1",
+      "number": "1",
+      "capacity": 4,
+      "status": "Kosong",
+      "area": "Indoor"
+    },
+    {
+      "id": "t_2",
+      "number": "2",
+      "capacity": 4,
+      "status": "Terisi",
+      "area": "Indoor"
+    },
+    {
+      "id": "t_3",
+      "number": "3",
+      "capacity": 2,
+      "status": "Kosong",
+      "area": "Indoor"
+    },
+    {
+      "id": "t_4",
+      "number": "4",
+      "capacity": 6,
+      "status": "Reservasi",
+      "area": "VIP"
+    },
+    {
+      "id": "t_5",
+      "number": "5",
+      "capacity": 4,
+      "status": "Dibersihkan",
+      "area": "Indoor"
+    },
+    {
+      "id": "t_6",
+      "number": "6",
+      "capacity": 4,
+      "status": "Kosong",
+      "area": "Outdoor"
+    },
+    {
+      "id": "t_7",
+      "number": "7",
+      "capacity": 2,
+      "status": "Terisi",
+      "area": "Outdoor"
+    },
+    {
+      "id": "t_8",
+      "number": "8",
+      "capacity": 4,
+      "status": "Kosong",
+      "area": "Outdoor"
+    },
+    {
+      "id": "t_9",
+      "number": "9",
+      "capacity": 8,
+      "status": "Kosong",
+      "area": "VIP"
+    },
+    {
+      "id": "t_10",
+      "number": "10",
+      "capacity": 4,
+      "status": "Kosong",
+      "area": "Indoor"
+    },
+    {
+      "id": "t_11",
+      "number": "11",
+      "capacity": 4,
+      "status": "Kosong",
+      "area": "Indoor"
+    },
+    {
+      "id": "t_12",
+      "number": "12",
+      "capacity": 4,
+      "status": "Kosong",
+      "area": "Indoor"
+    }
   ],
-  "serviceChargePercent": 0,
-  "taxPercent": 0,
+  "serviceChargePercent": 5,
+  "taxPercent": 10,
   "storeProfile": {
-    "name": "Warung Daeng Soppeng",
+    "name": "Warung Daeng ",
     "address": "Cikke'e, Jl. Salotungo, Soppeng",
     "phone": "085342016403",
     "googleMaps": "https://maps.google.com/?q=Warung+Daeng+Soppeng",
     "instagram": "warung_daeng",
     "tiktok": "jiradaengbaji",
-    "operationalHours": "14.00 - 20.00"
-  }
+    "operationalHours": "14.00 - 20.00",
+    "logo": ".",
+    "categories": [
+      "Makanan",
+      "Minuman",
+      "Frozen Food"
+    ]
+  },
+  "currency": "Rupiah",
+  "timezone": "WITA (UTC+8)"
 }

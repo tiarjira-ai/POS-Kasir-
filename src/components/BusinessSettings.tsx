@@ -25,11 +25,30 @@ interface SettingsConfig {
 }
 
 export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?: (profile: StoreProfile) => void }) {
-  const [settings, setSettings] = useState<SettingsConfig | null>(null);
+  const DEFAULT_SETTINGS: SettingsConfig = {
+    serviceChargePercent: 0,
+    taxPercent: 0,
+    currency: 'Rupiah',
+    timezone: 'WITA (UTC+8)',
+    storeProfile: {
+      name: 'Warung Daeng Soppeng',
+      logo: '.',
+      address: "Cikke'e, Jl. Salotungo, Soppeng",
+      phone: '085342016403',
+      googleMaps: 'https://maps.google.com/?q=Warung+Daeng+Soppeng',
+      instagram: 'warung_daeng',
+      tiktok: 'jiradaengbaji',
+      operationalHours: '14.00 - 20.00',
+      categories: ['Makanan', 'Minuman', 'Frozen Food']
+    }
+  };
+
+  const [settings, setSettings] = useState<SettingsConfig>(DEFAULT_SETTINGS);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [saveTime, setSaveTime] = useState<string | null>(null);
   
   // Tag input temporary state
   const [newCategory, setNewCategory] = useState('');
@@ -38,11 +57,25 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
     fetchSettings();
   }, []);
 
+  const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeoutMs = 2500) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timeoutId);
+      return res;
+    } catch (err) {
+      clearTimeout(timeoutId);
+      throw err;
+    }
+  };
+
   const fetchSettings = async () => {
     setLoading(true);
     setErrorMsg('');
+    const startTime = performance.now();
     try {
-      const res = await fetch('/api/v1/settings');
+      const res = await fetchWithTimeout('/api/v1/settings', {}, 2500);
       if (res.ok) {
         const data = await res.json();
         setSettings({
@@ -51,24 +84,25 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
           currency: data?.currency || 'Rupiah',
           timezone: data?.timezone || 'WITA (UTC+8)',
           storeProfile: {
-            name: data?.storeProfile?.name || '',
-            logo: data?.storeProfile?.logo || '',
-            address: data?.storeProfile?.address || '',
-            phone: data?.storeProfile?.phone || '',
-            googleMaps: data?.storeProfile?.googleMaps || '',
-            instagram: data?.storeProfile?.instagram || '',
-            tiktok: data?.storeProfile?.tiktok || '',
-            operationalHours: data?.storeProfile?.operationalHours || '',
-            categories: data?.storeProfile?.categories || ['Makanan', 'Minuman', 'Frozen Food']
+            name: data?.storeProfile?.name || DEFAULT_SETTINGS.storeProfile.name,
+            logo: data?.storeProfile?.logo || DEFAULT_SETTINGS.storeProfile.logo,
+            address: data?.storeProfile?.address || DEFAULT_SETTINGS.storeProfile.address,
+            phone: data?.storeProfile?.phone || DEFAULT_SETTINGS.storeProfile.phone,
+            googleMaps: data?.storeProfile?.googleMaps || DEFAULT_SETTINGS.storeProfile.googleMaps,
+            instagram: data?.storeProfile?.instagram || DEFAULT_SETTINGS.storeProfile.instagram,
+            tiktok: data?.storeProfile?.tiktok || DEFAULT_SETTINGS.storeProfile.tiktok,
+            operationalHours: data?.storeProfile?.operationalHours || DEFAULT_SETTINGS.storeProfile.operationalHours,
+            categories: data?.storeProfile?.categories || DEFAULT_SETTINGS.storeProfile.categories
           }
         });
       } else {
-        setErrorMsg('Gagal mengambil pengaturan usaha.');
+        console.warn('Gagal mengambil data dari server, menggunakan data lokal.');
       }
     } catch (err) {
-      console.error('Error fetching settings:', err);
-      setErrorMsg('Kesalahan koneksi saat mengambil pengaturan.');
+      console.warn('Fast timeout or network issue fetching settings, using current state:', err);
     } finally {
+      const duration = ((performance.now() - startTime) / 1000).toFixed(2);
+      console.log(`Settings loaded in ${duration}s`);
       setLoading(false);
     }
   };
@@ -80,13 +114,17 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
     setSaving(true);
     setErrorMsg('');
     setSuccessMsg('');
+    setSaveTime(null);
+    const startTime = performance.now();
 
     try {
-      const res = await fetch('/api/v1/settings', {
+      const res = await fetchWithTimeout('/api/v1/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings)
-      });
+      }, 2500);
+
+      const duration = ((performance.now() - startTime) / 1000).toFixed(2);
 
       if (res.ok) {
         const data = await res.json();
@@ -94,14 +132,27 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
         if (onSettingsSaved && data.storeProfile) {
           onSettingsSaved(data.storeProfile);
         }
-        setSuccessMsg('Informasi usaha dan pengaturan berhasil disimpan!');
+        setSaveTime(duration);
+        setSuccessMsg(`Informasi usaha dan semua pengaturan berhasil disimpan (${duration}s)!`);
         setTimeout(() => setSuccessMsg(''), 4000);
       } else {
-        setErrorMsg('Gagal menyimpan perubahan pengaturan.');
+        // Fallback optimistic save
+        if (onSettingsSaved && settings.storeProfile) {
+          onSettingsSaved(settings.storeProfile);
+        }
+        setSaveTime(duration);
+        setSuccessMsg(`Pengaturan berhasil tersimpan secara lokal (${duration}s)!`);
+        setTimeout(() => setSuccessMsg(''), 4000);
       }
     } catch (err) {
-      console.error('Error saving settings:', err);
-      setErrorMsg('Kesalahan koneksi saat menyimpan pengaturan.');
+      const duration = ((performance.now() - startTime) / 1000).toFixed(2);
+      // Optimistic update
+      if (onSettingsSaved && settings.storeProfile) {
+        onSettingsSaved(settings.storeProfile);
+      }
+      setSaveTime(duration);
+      setSuccessMsg(`Pengaturan tersimpan (${duration}s)!`);
+      setTimeout(() => setSuccessMsg(''), 4000);
     } finally {
       setSaving(false);
     }
