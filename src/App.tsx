@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   LogOut, ShieldAlert, Sparkles, LayoutDashboard, ShoppingCart, 
   UtensilsCrossed, Package, Settings, BarChart2, Users, QrCode, ClipboardList,
-  Menu, X, Store, Sliders, ChevronLeft, ChevronRight,
+  Menu, X, Store, Sliders, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, MousePointer,
   Download, Smartphone, Monitor, CheckCircle, Wifi, WifiOff
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -100,6 +100,22 @@ export default function App() {
       setHeaderClickCount(0);
     } else {
       setHeaderClickCount(nextCount);
+    }
+  };
+
+  const handleScrollUp = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const mainEl = document.querySelector('main');
+    if (mainEl) {
+      mainEl.scrollTo({ top: mainEl.scrollTop - 450, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollDown = () => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    const mainEl = document.querySelector('main');
+    if (mainEl) {
+      mainEl.scrollTo({ top: mainEl.scrollTop + 450, behavior: 'smooth' });
     }
   };
 
@@ -884,6 +900,32 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Floating Mouse Scroll Navigation Assistant / Quick Scroll Icons */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 p-2 rounded-2xl shadow-2xl backdrop-blur-md select-none">
+        <button
+          onClick={handleScrollUp}
+          className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-emerald-500 text-slate-300 hover:text-slate-950 flex items-center justify-center transition-all active:scale-90 cursor-pointer shadow-md group"
+          title="Klik untuk Scroll Ke Atas"
+          aria-label="Scroll Ke Atas"
+        >
+          <ChevronUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+        </button>
+
+        <div className="flex flex-col items-center text-[8px] font-black font-mono text-emerald-400 py-0.5 px-1 uppercase tracking-tighter" title="Scroll Menggunakan Mouse Wheel atau Klik Tombol Panah">
+          <MousePointer className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+          <span className="text-[7.5px] text-slate-400 font-sans font-bold mt-0.5">SCROLL</span>
+        </div>
+
+        <button
+          onClick={handleScrollDown}
+          className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-emerald-500 text-slate-300 hover:text-slate-950 flex items-center justify-center transition-all active:scale-90 cursor-pointer shadow-md group"
+          title="Klik untuk Scroll Ke Bawah"
+          aria-label="Scroll Ke Bawah"
+        >
+          <ChevronDown className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
+        </button>
+      </div>
 
     </div>
   );
