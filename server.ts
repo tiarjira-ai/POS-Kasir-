@@ -149,8 +149,17 @@ async function saveToFirestore(newData: any) {
       }
     }
     console.log('Successfully synchronized changes to Firestore.');
-  } catch (error) {
-    console.error('Error synchronizing to Firestore:', error);
+  } catch (error: any) {
+    if (
+      error?.message?.includes('PERMISSION_DENIED') ||
+      error?.message?.includes('Cloud Firestore API') ||
+      error?.code === 'permission-denied'
+    ) {
+      console.warn('Cloud Firestore API disabled or permission denied. Falling back to local storage.');
+      firestoreDb = null;
+    } else {
+      console.error('Error synchronizing to Firestore:', error);
+    }
   }
 }
 

@@ -78,23 +78,30 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
       const res = await fetchWithTimeout('/api/v1/settings', {}, 2500);
       if (res.ok) {
         const data = await res.json();
-        setSettings({
-          serviceChargePercent: data?.serviceChargePercent ?? 0,
-          taxPercent: data?.taxPercent ?? 0,
-          currency: data?.currency || 'Rupiah',
-          timezone: data?.timezone || 'WITA (UTC+8)',
+        const sp = data?.storeProfile || {};
+        const updatedConfig: SettingsConfig = {
+          serviceChargePercent: data?.serviceChargePercent ?? DEFAULT_SETTINGS.serviceChargePercent,
+          taxPercent: data?.taxPercent ?? DEFAULT_SETTINGS.taxPercent,
+          currency: data?.currency ?? DEFAULT_SETTINGS.currency,
+          timezone: data?.timezone ?? DEFAULT_SETTINGS.timezone,
           storeProfile: {
-            name: data?.storeProfile?.name || DEFAULT_SETTINGS.storeProfile.name,
-            logo: data?.storeProfile?.logo || DEFAULT_SETTINGS.storeProfile.logo,
-            address: data?.storeProfile?.address || DEFAULT_SETTINGS.storeProfile.address,
-            phone: data?.storeProfile?.phone || DEFAULT_SETTINGS.storeProfile.phone,
-            googleMaps: data?.storeProfile?.googleMaps || DEFAULT_SETTINGS.storeProfile.googleMaps,
-            instagram: data?.storeProfile?.instagram || DEFAULT_SETTINGS.storeProfile.instagram,
-            tiktok: data?.storeProfile?.tiktok || DEFAULT_SETTINGS.storeProfile.tiktok,
-            operationalHours: data?.storeProfile?.operationalHours || DEFAULT_SETTINGS.storeProfile.operationalHours,
-            categories: data?.storeProfile?.categories || DEFAULT_SETTINGS.storeProfile.categories
+            name: sp.name ?? DEFAULT_SETTINGS.storeProfile.name,
+            logo: sp.logo ?? DEFAULT_SETTINGS.storeProfile.logo,
+            address: sp.address ?? DEFAULT_SETTINGS.storeProfile.address,
+            phone: sp.phone ?? DEFAULT_SETTINGS.storeProfile.phone,
+            googleMaps: sp.googleMaps ?? DEFAULT_SETTINGS.storeProfile.googleMaps,
+            instagram: sp.instagram ?? DEFAULT_SETTINGS.storeProfile.instagram,
+            tiktok: sp.tiktok ?? DEFAULT_SETTINGS.storeProfile.tiktok,
+            operationalHours: sp.operationalHours ?? DEFAULT_SETTINGS.storeProfile.operationalHours,
+            categories: sp.categories ?? DEFAULT_SETTINGS.storeProfile.categories
           }
-        });
+        };
+        setSettings(updatedConfig);
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('smart_pos_settings', JSON.stringify(updatedConfig));
+          } catch (_) {}
+        }
       } else {
         console.warn('Gagal mengambil data dari server, menggunakan data lokal.');
       }
@@ -282,7 +289,6 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
                   value={settings.storeProfile?.logo || ''}
                   onChange={(e) => handleProfileChange('logo', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-                  required
                 />
                 <Globe className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
               </div>
@@ -312,7 +318,6 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
                   value={settings.storeProfile?.googleMaps || ''}
                   onChange={(e) => handleProfileChange('googleMaps', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-                  required
                 />
                 <MapPin className="w-4 h-4 text-amber-500 absolute left-3.5 top-3.5" />
               </div>
@@ -327,7 +332,6 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
                   value={settings.storeProfile?.phone || ''}
                   onChange={(e) => handleProfileChange('phone', e.target.value)}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 px-3.5 pl-10 text-xs font-semibold text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-                  required
                 />
                 <Phone className="w-4 h-4 text-emerald-500 absolute left-3.5 top-3.5" />
               </div>

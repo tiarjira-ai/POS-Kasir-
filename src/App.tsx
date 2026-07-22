@@ -75,7 +75,24 @@ export default function App() {
   const [isCustomerSelfOrder, setIsCustomerSelfOrder] = useState(false);
   const [customerTable, setCustomerTable] = useState<string>('');
   const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
-  const [storeProfile, setStoreProfile] = useState<any>({ name: 'Warung Daeng Soppeng' });
+  const [storeProfile, setStoreProfileState] = useState<any>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('smart_pos_store_profile');
+        if (saved) return JSON.parse(saved);
+      } catch (_) {}
+    }
+    return { name: 'Warung Daeng Soppeng' };
+  });
+
+  const setStoreProfile = (newProfile: any) => {
+    setStoreProfileState(newProfile);
+    if (typeof window !== 'undefined' && newProfile) {
+      try {
+        localStorage.setItem('smart_pos_store_profile', JSON.stringify(newProfile));
+      } catch (_) {}
+    }
+  };
   const [showQuickAccess, setShowQuickAccess] = useState(false);
   const [headerClickCount, setHeaderClickCount] = useState(0);
   const [isOnline, setIsOnline] = useState<boolean>(() => typeof navigator !== 'undefined' ? navigator.onLine : true);
