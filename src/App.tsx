@@ -52,7 +52,22 @@ const DEMO_ROLES = [
 ];
 
 export default function App() {
-  const [session, setSession] = useState<UserSession | null>(null);
+  const [session, setSession] = useState<UserSession | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('smart_pos_session');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.id && parsed.role) {
+            return parsed;
+          }
+        }
+      } catch (e) {
+        console.error('Error restoring session:', e);
+      }
+    }
+    return null;
+  });
   const [activeTab, setActiveTab] = useState<TabCode>('POS_KASIR');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -207,6 +222,11 @@ export default function App() {
       role: normalizeRole(user.role)
     };
     setSession(normalizedUser);
+    try {
+      localStorage.setItem('smart_pos_session', JSON.stringify(normalizedUser));
+    } catch (e) {
+      console.error('Error persisting session:', e);
+    }
     
     // Set logical initial tabs depending on staff role
     if (normalizedUser.role === 'Owner') {
@@ -222,6 +242,9 @@ export default function App() {
 
   const handleLogout = () => {
     setSession(null);
+    try {
+      localStorage.removeItem('smart_pos_session');
+    } catch (e) {}
   };
 
   if (isMaintenanceMode) {

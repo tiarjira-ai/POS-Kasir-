@@ -142,7 +142,11 @@ const SEED_DATA = {
   stockMovements: []
 };
 
+let isFirestoreDisabled = false;
+let seedCheckDone = false;
+
 async function seedCollectionIfEmpty(colName: string, items: any[]) {
+  if (isFirestoreDisabled) return;
   try {
     const colRef = collection(db, colName);
     const snap = await getDocs(query(colRef, limit(1)));
@@ -153,58 +157,73 @@ async function seedCollectionIfEmpty(colName: string, items: any[]) {
       }
     }
   } catch (error) {
-    console.error(`Failed to seed collection ${colName}:`, error);
+    console.warn(`Failed to seed collection ${colName} (Firestore offline/disabled):`, error);
   }
 }
 
 async function ensureSeedAndSettings() {
-  await authPromise;
-  
-  // Seed settings if not exists
-  try {
-    const configDocRef = doc(db, 'settings', 'config');
-    const snap = await getDoc(configDocRef);
-    if (!snap.exists()) {
-      await setDoc(configDocRef, {
-        serviceChargePercent: 5,
-        taxPercent: 0,
-        currency: 'Rupiah',
-        timezone: 'WITA (UTC+8)',
-        storeProfile: {
-          name: 'Warung Daeng Soppeng',
-          address: "Cikke'e, Jl. Salotungo, Watansoppeng",
-          phone: '085342016403',
-          instagram: '@warungdaengsoppeng',
-          tiktok: '@jiradaengbaji',
-          operationalHours: '14.00 WITA – 20.00 WITA',
-          categories: ['Kuliner', 'Frozen Food', 'Minuman']
-        }
-      });
-    }
-  } catch (err) {
-    console.error('Settings seed failed:', err);
-  }
+  if (isFirestoreDisabled || seedCheckDone) return;
+  seedCheckDone = true;
 
-  // Seed standard collections
-  const promises = Object.entries(SEED_DATA).map(([col, list]) => {
-    return seedCollectionIfEmpty(col, list);
-  });
-  await Promise.all(promises);
+  try {
+    await authPromise;
+    
+    // Seed settings if not exists
+    try {
+      const configDocRef = doc(db, 'settings', 'config');
+      const snap = await getDoc(configDocRef);
+      if (!snap.exists()) {
+        await setDoc(configDocRef, {
+          serviceChargePercent: 5,
+          taxPercent: 0,
+          currency: 'Rupiah',
+          timezone: 'WITA (UTC+8)',
+          storeProfile: {
+            name: 'Warung Daeng Soppeng',
+            address: "Cikke'e, Jl. Salotungo, Watansoppeng",
+            phone: '085342016403',
+            instagram: '@warungdaengsoppeng',
+            tiktok: '@jiradaengbaji',
+            operationalHours: '14.00 WITA – 20.00 WITA',
+            categories: ['Kuliner', 'Frozen Food', 'Minuman']
+          }
+        });
+      }
+    } catch (err) {
+      console.warn('Settings seed skipped/failed:', err);
+    }
+
+    // Seed standard collections
+    const promises = Object.entries(SEED_DATA).map(([col, list]) => {
+      return seedCollectionIfEmpty(col, list);
+    });
+    await Promise.all(promises);
+  } catch (err) {
+    console.warn('Firestore initialization failed, disabling auto-sync:', err);
+    isFirestoreDisabled = true;
+  }
 }
 
-// Global cached collections in-memory to prevent reading multiple times if needed,
-// but let's query Firestore directly for real-time consistency.
 async function getCollectionDocs(colName: string): Promise<any[]> {
+  const fallback = SEED_DATA[colName as keyof typeof SEED_DATA] || [];
+  if (isFirestoreDisabled) {
+    return fallback;
+  }
+
   try {
     const snap = await getDocs(collection(db, colName));
     const list: any[] = [];
     snap.forEach((d) => {
       list.push({ id: d.id, ...d.data() });
     });
+
+    if (list.length === 0 && fallback.length > 0) {
+      return fallback;
+    }
     return list;
   } catch (err) {
-    handleFirestoreError(err, OperationType.LIST, colName);
-    return [];
+    console.warn(`Firestore query failed for ${colName}, using fallback data:`, err);
+    return fallback;
   }
 }
 
@@ -213,7 +232,18 @@ export async function handleClientApiRequest(url: string, init?: RequestInit): P
   await ensureSeedAndSettings();
   
   const method = init?.method || 'GET';
-  const body = init?.body ? JSON.parse(init.body as string) : {};
+  let body: any = {};
+  if (init?.body) {
+    if (typeof init.body === 'string') {
+      try {
+        body = JSON.parse(init.body);
+      } catch (e) {
+        body = {};
+      }
+    } else if (typeof init.body === 'object') {
+      body = init.body;
+    }
+  }
   const cleanUrl = url.replace(/^\/api\/v1\//, '').split('?')[0];
   const urlParts = cleanUrl.split('/');
 
@@ -273,14 +303,41 @@ export async function handleClientApiRequest(url: string, init?: RequestInit): P
 
     // 2. SETTINGS
     if (cleanUrl === 'settings') {
+      const defaultSettings = {
+        serviceChargePercent: 5,
+        taxPercent: 0,
+        currency: 'Rupiah',
+        timezone: 'WITA (UTC+8)',
+        storeProfile: {
+          name: 'Warung Daeng Soppeng',
+          address: "Cikke'e, Jl. Salotungo, Watansoppeng",
+          phone: '085342016403',
+          instagram: '@warungdaengsoppeng',
+          tiktok: '@jiradaengbaji',
+          operationalHours: '14.00 WITA – 20.00 WITA',
+          categories: ['Kuliner', 'Frozen Food', 'Minuman']
+        }
+      };
+
       const configDocRef = doc(db, 'settings', 'config');
       if (method === 'GET') {
-        const snap = await getDoc(configDocRef);
-        return new Response(JSON.stringify(snap.data() || {}), { status: 200 });
+        try {
+          const snap = await getDoc(configDocRef);
+          const data = snap.data();
+          return new Response(JSON.stringify(data && Object.keys(data).length > 0 ? data : defaultSettings), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        } catch (e) {
+          console.warn('Error fetching settings, returning fallback:', e);
+          return new Response(JSON.stringify(defaultSettings), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        }
       } else if (method === 'PUT' || method === 'POST') {
-        await setDoc(configDocRef, body, { merge: true });
-        const updated = await getDoc(configDocRef);
-        return new Response(JSON.stringify(updated.data() || {}), { status: 200 });
+        try {
+          await setDoc(configDocRef, body, { merge: true });
+          const updated = await getDoc(configDocRef);
+          return new Response(JSON.stringify(updated.data() || body), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        } catch (e) {
+          console.warn('Error updating settings, returning body:', e);
+          return new Response(JSON.stringify(body), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        }
       }
     }
 

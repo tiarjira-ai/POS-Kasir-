@@ -223,7 +223,8 @@ async function initFirestore() {
       console.log('Firestore seeding complete.');
     }
   } catch (error) {
-    console.error('Error initializing Firestore. Falling back to local db.json...', error);
+    console.warn('Error initializing Firestore (API disabled or offline). Falling back to local db.json...', error);
+    firestoreDb = null;
     cachedDB = readLocalDB();
   }
 }

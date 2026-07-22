@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Shield, KeyRound, AlertCircle, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Shield, KeyRound, AlertCircle, Sparkles, LogIn, Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface PINLoginProps {
@@ -13,6 +13,7 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
   const [clickCount, setClickCount] = useState(0);
   const [showDemo, setShowDemo] = useState(false);
   const [storeName, setStoreName] = useState('Warung Daeng Soppeng');
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchStoreName = async () => {
@@ -31,6 +32,40 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
     fetchStoreName();
   }, []);
 
+  // Listen to physical keyboard events (Desktop, Laptop, Tablet keyboard)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if focus is in another input field
+      if (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement !== hiddenInputRef.current) {
+        return;
+      }
+
+      if (e.key >= '0' && e.key <= '9') {
+        setError('');
+        setPin(prev => {
+          if (prev.length < 6) {
+            const nextPin = prev + e.key;
+            if (nextPin.length === 6) {
+              setTimeout(() => submitPIN(nextPin), 50);
+            }
+            return nextPin;
+          }
+          return prev;
+        });
+      } else if (e.key === 'Backspace') {
+        setError('');
+        setPin(prev => prev.slice(0, -1));
+      } else if (e.key === 'Enter') {
+        if (pin.length >= 4) {
+          submitPIN(pin);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [pin]);
+
   const handleKeyPress = (num: string) => {
     setError('');
     if (pin.length < 6) {
@@ -48,6 +83,7 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
   };
 
   const submitPIN = async (pinValue: string) => {
+    if (!pinValue || pinValue.trim().length < 4 || loading) return;
     setLoading(true);
     setError('');
     const trimmedPin = pinValue.trim();
@@ -83,7 +119,7 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
         return;
       }
 
-      // If server returned error or non-OK response, fallback to default employee PIN check
+      // Fallback employee PIN check if API fails or returns error
       const defaultEmployees = [
         { id: 'emp_1', name: 'Daeng Baji (Owner)', role: 'OWNER', pin: '123456' },
         { id: 'emp_2', name: 'Sitti Saleha', role: 'MANAGER', pin: '222222' },
@@ -154,6 +190,26 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-950 p-4">
+      {/* Hidden input for mobile keyboard / auto-fill support */}
+      <input
+        ref={hiddenInputRef}
+        type="password"
+        pattern="[0-9]*"
+        inputMode="numeric"
+        maxLength={6}
+        value={pin}
+        onChange={(e) => {
+          const val = e.target.value.replace(/\D/g, '').slice(0, 6);
+          setError('');
+          setPin(val);
+          if (val.length === 6) {
+            submitPIN(val);
+          }
+        }}
+        className="opacity-0 absolute -z-10 w-0 h-0"
+        autoFocus
+      />
+
       <div className="w-full max-w-md bg-slate-900/90 backdrop-blur-md rounded-3xl shadow-[0_0_40px_rgba(16,185,129,0.12)] p-8 border border-slate-800/80 relative overflow-hidden flex flex-col items-center">
         {/* Background glowing spheres */}
         <div className="absolute -top-12 -left-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl" />
@@ -178,7 +234,10 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
 
         {/* PIN Indicators */}
         <div className="w-full mb-6">
-          <div className="flex justify-center gap-3.5 my-3">
+          <div 
+            onClick={() => hiddenInputRef.current?.focus()}
+            className="flex justify-center gap-3.5 my-3 cursor-pointer"
+          >
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
@@ -199,13 +258,13 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
           ) : (
             <p className="text-center text-xs text-slate-400 flex items-center justify-center gap-1.5 font-mono">
               <KeyRound className="w-3.5 h-3.5 text-emerald-400" />
-              Masukkan 6 digit PIN Operator
+              Masukkan 6 digit PIN Operator (Keyboard / Layar)
             </p>
           )}
         </div>
 
         {/* Number Keypad */}
-        <div className="grid grid-cols-3 gap-3 w-full max-w-[280px] mb-8">
+        <div className="grid grid-cols-3 gap-3 w-full max-w-[280px] mb-6">
           {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((num) => (
             <button
               key={num}
@@ -231,6 +290,25 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
             Hapus
           </button>
         </div>
+
+        {/* Submit Button */}
+        <button
+          disabled={loading || pin.length < 4}
+          onClick={() => submitPIN(pin)}
+          className="w-full max-w-[280px] py-3.5 mb-6 rounded-2xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 disabled:opacity-40 text-slate-950 font-black text-sm tracking-wide transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 cursor-pointer"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
+              <span>MEMPROSES LOGIN...</span>
+            </>
+          ) : (
+            <>
+              <LogIn className="w-4 h-4 text-slate-950" />
+              <span>MASUK SEKARANG</span>
+            </>
+          )}
+        </button>
 
         {/* Developer Shortcut Panel */}
         {showDemo && (
