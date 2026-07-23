@@ -63,7 +63,15 @@ export default function QRSelfOrder({ isCustomerMode = false, tableNum = '' }: Q
   const [loadingStateMessage, setLoadingStateMessage] = useState('Menghubungkan ke server...');
   const [healthErrorMessage, setHealthErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [storeProfile, setStoreProfile] = useState<any>({ name: 'Warung Daeng Soppeng' });
+  const [storeProfile, setStoreProfile] = useState<any>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('smart_pos_store_profile');
+        if (saved) return JSON.parse(saved);
+      } catch (_) {}
+    }
+    return { name: 'Warung Daeng Soppeng' };
+  });
 
   // Load origin and environment url safely
   useEffect(() => {

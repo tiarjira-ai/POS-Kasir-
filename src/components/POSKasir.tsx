@@ -21,7 +21,15 @@ export default function POSKasir({ userSession }: POSKasirProps) {
   const [activeTab, setActiveTab] = useState<'POS' | 'TRANSACTIONS'>('POS');
   const [mobilePosTab, setMobilePosTab] = useState<'menu' | 'cart'>('menu');
 
-  const [storeProfile, setStoreProfile] = useState<any>({ name: 'Warung Daeng Soppeng', address: "Cikke'e, Jl. Salotungo, Soppeng", phone: '085342016403' });
+  const [storeProfile, setStoreProfile] = useState<any>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('smart_pos_store_profile');
+        if (saved) return JSON.parse(saved);
+      } catch (_) {}
+    }
+    return { name: 'Warung Daeng Soppeng', address: "Cikke'e, Jl. Salotungo, Soppeng", phone: '085342016403' };
+  });
   const [taxPercent, setTaxPercent] = useState<number>(0);
   const [serviceChargePercent, setServiceChargePercent] = useState<number>(0);
 
@@ -34,6 +42,9 @@ export default function POSKasir({ userSession }: POSKasirProps) {
           if (data) {
             if (data.storeProfile) {
               setStoreProfile(data.storeProfile);
+              try {
+                localStorage.setItem('smart_pos_store_profile', JSON.stringify(data.storeProfile));
+              } catch (_) {}
             }
             if (typeof data.taxPercent === 'number') {
               setTaxPercent(data.taxPercent);

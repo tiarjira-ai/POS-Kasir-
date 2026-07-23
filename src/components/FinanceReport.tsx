@@ -18,7 +18,15 @@ export default function FinanceReport() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeSubTab, setActiveSubTab] = useState<'KALENDER' | 'LABARUGI' | 'CASHFLOW' | 'PENGELUARAN'>('KALENDER');
-  const [storeProfile, setStoreProfile] = useState<any>({ name: 'Warung Daeng Soppeng' });
+  const [storeProfile, setStoreProfile] = useState<any>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('smart_pos_store_profile');
+        if (saved) return JSON.parse(saved);
+      } catch (_) {}
+    }
+    return { name: 'Warung Daeng Soppeng' };
+  });
 
   useEffect(() => {
     const fetchStoreProfile = async () => {
@@ -28,6 +36,9 @@ export default function FinanceReport() {
           const data = await res.json();
           if (data && data.storeProfile) {
             setStoreProfile(data.storeProfile);
+            try {
+              localStorage.setItem('smart_pos_store_profile', JSON.stringify(data.storeProfile));
+            } catch (_) {}
           }
         }
       } catch (err) {

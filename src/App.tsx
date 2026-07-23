@@ -143,6 +143,12 @@ export default function App() {
   const [installGuideTab, setInstallGuideTab] = useState<'LAPTOP' | 'ANDROID' | 'IOS'>('LAPTOP');
 
   useEffect(() => {
+    if (storeProfile?.name) {
+      document.title = `${storeProfile.name} - Smart POS`;
+    }
+  }, [storeProfile?.name]);
+
+  useEffect(() => {
     const fetchSettings = async () => {
       try {
         const res = await fetch('/api/v1/settings');

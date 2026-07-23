@@ -13,7 +13,15 @@ export default function EmployeeManagement() {
   const [payrolls, setPayrolls] = useState<Payroll[]>([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'ROSTER' | 'ABSEN' | 'SHIFT' | 'PAYROLL'>('ROSTER');
-  const [storeProfile, setStoreProfile] = useState<any>({ name: 'Warung Daeng Soppeng', address: "Cikke'e, Watansoppeng, Sulawesi Selatan", phone: '085342016403' });
+  const [storeProfile, setStoreProfile] = useState<any>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('smart_pos_store_profile');
+        if (saved) return JSON.parse(saved);
+      } catch (_) {}
+    }
+    return { name: 'Warung Daeng Soppeng', address: "Cikke'e, Watansoppeng, Sulawesi Selatan", phone: '085342016403' };
+  });
 
   useEffect(() => {
     const fetchStoreProfile = async () => {
@@ -23,6 +31,9 @@ export default function EmployeeManagement() {
           const data = await res.json();
           if (data && data.storeProfile) {
             setStoreProfile(data.storeProfile);
+            try {
+              localStorage.setItem('smart_pos_store_profile', JSON.stringify(data.storeProfile));
+            } catch (_) {}
           }
         }
       } catch (err) {

@@ -43,7 +43,18 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
     }
   };
 
-  const [settings, setSettings] = useState<SettingsConfig>(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState<SettingsConfig>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('smart_pos_settings');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.storeProfile) return parsed;
+        }
+      } catch (_) {}
+    }
+    return DEFAULT_SETTINGS;
+  });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
@@ -100,6 +111,9 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
         if (typeof window !== 'undefined') {
           try {
             localStorage.setItem('smart_pos_settings', JSON.stringify(updatedConfig));
+            if (updatedConfig.storeProfile) {
+              localStorage.setItem('smart_pos_store_profile', JSON.stringify(updatedConfig.storeProfile));
+            }
           } catch (_) {}
         }
       } else {
@@ -124,6 +138,21 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
     setSaveTime(null);
     const startTime = performance.now();
 
+    // Helper to persist locally and notify listeners
+    const saveLocally = (conf: SettingsConfig) => {
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('smart_pos_settings', JSON.stringify(conf));
+          if (conf.storeProfile) {
+            localStorage.setItem('smart_pos_store_profile', JSON.stringify(conf.storeProfile));
+          }
+        } catch (_) {}
+      }
+      if (onSettingsSaved && conf.storeProfile) {
+        onSettingsSaved(conf.storeProfile);
+      }
+    };
+
     try {
       const res = await fetchWithTimeout('/api/v1/settings', {
         method: 'PUT',
@@ -136,17 +165,13 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
       if (res.ok) {
         const data = await res.json();
         setSettings(data);
-        if (onSettingsSaved && data.storeProfile) {
-          onSettingsSaved(data.storeProfile);
-        }
+        saveLocally(data);
         setSaveTime(duration);
         setSuccessMsg(`Informasi usaha dan semua pengaturan berhasil disimpan (${duration}s)!`);
         setTimeout(() => setSuccessMsg(''), 4000);
       } else {
         // Fallback optimistic save
-        if (onSettingsSaved && settings.storeProfile) {
-          onSettingsSaved(settings.storeProfile);
-        }
+        saveLocally(settings);
         setSaveTime(duration);
         setSuccessMsg(`Pengaturan berhasil tersimpan secara lokal (${duration}s)!`);
         setTimeout(() => setSuccessMsg(''), 4000);
@@ -154,11 +179,9 @@ export default function BusinessSettings({ onSettingsSaved }: { onSettingsSaved?
     } catch (err) {
       const duration = ((performance.now() - startTime) / 1000).toFixed(2);
       // Optimistic update
-      if (onSettingsSaved && settings.storeProfile) {
-        onSettingsSaved(settings.storeProfile);
-      }
+      saveLocally(settings);
       setSaveTime(duration);
-      setSuccessMsg(`Pengaturan tersimpan (${duration}s)!`);
+      setSuccessMsg(`Pengaturan tersimpan secara lokal (${duration}s)!`);
       setTimeout(() => setSuccessMsg(''), 4000);
     } finally {
       setSaving(false);

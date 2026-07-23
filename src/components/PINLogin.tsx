@@ -12,7 +12,18 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
   const [loading, setLoading] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [showDemo, setShowDemo] = useState(false);
-  const [storeName, setStoreName] = useState('Warung Daeng Soppeng');
+  const [storeName, setStoreName] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('smart_pos_store_profile');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.name) return parsed.name;
+        }
+      } catch (_) {}
+    }
+    return 'Warung Daeng Soppeng';
+  });
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -23,6 +34,9 @@ export default function PINLogin({ onLoginSuccess }: PINLoginProps) {
           const data = await res.json();
           if (data && data.storeProfile && data.storeProfile.name) {
             setStoreName(data.storeProfile.name);
+            try {
+              localStorage.setItem('smart_pos_store_profile', JSON.stringify(data.storeProfile));
+            } catch (_) {}
           }
         }
       } catch (err) {

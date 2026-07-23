@@ -194,19 +194,21 @@ async function initFirestore() {
       const dbData: any = {};
       const configData = configSnap.data();
       
-      dbData.serviceChargePercent = configData.serviceChargePercent ?? 0;
-      dbData.taxPercent = configData.taxPercent ?? 0;
-      dbData.currency = configData.currency ?? 'Rupiah';
-      dbData.timezone = configData.timezone ?? 'WITA (UTC+8)';
-      dbData.storeProfile = configData.storeProfile ?? {};
+      const initialData = readLocalDB();
+      dbData.serviceChargePercent = configData.serviceChargePercent ?? initialData.serviceChargePercent ?? 0;
+      dbData.taxPercent = configData.taxPercent ?? initialData.taxPercent ?? 0;
+      dbData.currency = configData.currency ?? initialData.currency ?? 'Rupiah';
+      dbData.timezone = configData.timezone ?? initialData.timezone ?? 'WITA (UTC+8)';
+      dbData.storeProfile = {
+        ...(initialData.storeProfile || {}),
+        ...(configData.storeProfile || {})
+      };
 
       const collectionsToLoad = [
         'menu', 'employees', 'customers', 'inventory', 'suppliers', 
         'outlets', 'purchaseOrders', 'orders', 'stockMovements', 
         'attendances', 'payrolls', 'tables'
       ];
-
-      const initialData = readLocalDB();
 
       await Promise.all(collectionsToLoad.map(async (colName) => {
         const colRef = collection(firestoreDb, colName);
