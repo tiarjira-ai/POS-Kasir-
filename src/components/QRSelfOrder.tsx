@@ -48,7 +48,7 @@ async function fetchWithRetryAndTimeout(
 export default function QRSelfOrder({ isCustomerMode = false, tableNum = '' }: QRSelfOrderProps) {
   const [activeTable, setActiveTable] = useState<string>(tableNum || '5');
   const [activeCategory, setActiveCategory] = useState<'Makanan' | 'Minuman'>('Makanan');
-  const [currentOrigin, setCurrentOrigin] = useState('https://wdspos.tiarjira.workers.dev');
+  const [currentOrigin, setCurrentOrigin] = useState('https://poskasirumkm.tiarjira.workers.dev');
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   // States for Customer Phone Mode
@@ -68,7 +68,7 @@ export default function QRSelfOrder({ isCustomerMode = false, tableNum = '' }: Q
   // Load origin and environment url safely
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const configOrigin = 'https://wdspos.tiarjira.workers.dev';
+      const configOrigin = 'https://poskasirumkm.tiarjira.workers.dev';
       setCurrentOrigin(configOrigin);
       
       // Online/Offline Listeners
@@ -607,7 +607,7 @@ export default function QRSelfOrder({ isCustomerMode = false, tableNum = '' }: Q
               </span>
               
               <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(`https://wdspos.tiarjira.workers.dev/?table=${activeTable}`)}`} 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(`https://poskasirumkm.tiarjira.workers.dev/?table=${activeTable}`)}`} 
                 alt="QR Code Meja" 
                 className="w-40 h-40 border-4 border-white shadow-md rounded-lg"
               />
@@ -615,12 +615,12 @@ export default function QRSelfOrder({ isCustomerMode = false, tableNum = '' }: Q
               <div className="mt-3 space-y-1 w-full">
                 <span className="text-[9px] text-slate-400 font-bold block">Tautan QR Meja {activeTable}:</span>
                 <a 
-                  href={`https://wdspos.tiarjira.workers.dev/?table=${activeTable}`} 
+                  href={`https://poskasirumkm.tiarjira.workers.dev/?table=${activeTable}`} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-[10px] text-amber-600 hover:text-amber-500 font-black underline break-all block"
                 >
-                  https://wdspos.tiarjira.workers.dev/?table={activeTable}
+                  https://poskasirumkm.tiarjira.workers.dev/?table={activeTable}
                 </a>
               </div>
 
