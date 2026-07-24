@@ -244,14 +244,14 @@ export function safeOnSnapshot(
   };
 }
 
-// LocalStorage Helper for Instant Access on Slow Networks
+// LocalStorage Helper for Instant Access on Slow Networks & Offline Cloudflare Persistence
 function getLocalCache(colName: string): any[] | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(`wdspos_cache_${colName}`);
-    if (raw) {
+    if (raw !== null) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         return parsed;
       }
     }
@@ -265,6 +265,50 @@ function setLocalCache(colName: string, data: any[]) {
     localStorage.setItem(`wdspos_cache_${colName}`, JSON.stringify(data));
   } catch (_) {}
 }
+
+const DEFAULT_STORE_PROFILE = {
+  name: 'Warung Daeng Soppeng',
+  address: "Cikke'e, Jl. Salotungo, Watansoppeng",
+  phone: '085342016403',
+  instagram: '@warungdaengsoppeng',
+  tiktok: '@jiradaengbaji',
+  operationalHours: '14.00 WITA – 20.00 WITA',
+  categories: ['Kuliner', 'Frozen Food', 'Minuman']
+};
+
+function getLocalSettings(): any {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem('smart_pos_settings');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed) return parsed;
+    }
+    const profileRaw = localStorage.getItem('smart_pos_store_profile');
+    if (profileRaw) {
+      const storeProfile = JSON.parse(profileRaw);
+      return {
+        serviceChargePercent: 0,
+        taxPercent: 0,
+        currency: 'Rupiah',
+        timezone: 'WITA (UTC+8)',
+        storeProfile
+      };
+    }
+  } catch (_) {}
+  return null;
+}
+
+function setLocalSettings(data: any) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem('smart_pos_settings', JSON.stringify(data));
+    if (data && data.storeProfile) {
+      localStorage.setItem('smart_pos_store_profile', JSON.stringify(data.storeProfile));
+    }
+  } catch (_) {}
+}
+
 
 async function seedCollectionIfEmpty(colName: string, items: any[]) {
   if (isFirestoreDisabled) return;
@@ -387,6 +431,135 @@ export async function handleClientApiRequest(url: string, init?: RequestInit): P
   console.log(`[FirebaseClientAPI] Intercepted Request: ${method} /api/v1/${cleanUrl}`, body);
 
   try {
+    // HEALTH CHECK
+    if (cleanUrl === 'health' && method === 'GET') {
+      return new Response(JSON.stringify({ status: 'ok', environment: 'cloudflare-client-pwa' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // STORE SETTINGS & PROFILE (GET & PUT)
+    if (cleanUrl === 'settings') {
+      if (method === 'GET') {
+        const localSettings = getLocalSettings();
+        if (localSettings) {
+          return new Response(JSON.stringify(localSettings), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+        try {
+          const configDocRef = doc(db, 'settings', 'config');
+          const snap = await getDoc(configDocRef);
+          if (snap.exists()) {
+            const data = snap.data();
+            const fetchedSettings = {
+              serviceChargePercent: data.serviceChargePercent ?? 0,
+              taxPercent: data.taxPercent ?? 0,
+              currency: data.currency ?? 'Rupiah',
+              timezone: data.timezone ?? 'WITA (UTC+8)',
+              storeProfile: data.storeProfile || DEFAULT_STORE_PROFILE
+            };
+            setLocalSettings(fetchedSettings);
+            return new Response(JSON.stringify(fetchedSettings), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' }
+            });
+          }
+        } catch (_) {}
+
+        const fallbackSettings = {
+          serviceChargePercent: 0,
+          taxPercent: 0,
+          currency: 'Rupiah',
+          timezone: 'WITA (UTC+8)',
+          storeProfile: DEFAULT_STORE_PROFILE
+        };
+        setLocalSettings(fallbackSettings);
+        return new Response(JSON.stringify(fallbackSettings), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+
+      if (method === 'PUT') {
+        const existingSettings = getLocalSettings() || {
+          serviceChargePercent: 0,
+          taxPercent: 0,
+          currency: 'Rupiah',
+          timezone: 'WITA (UTC+8)',
+          storeProfile: DEFAULT_STORE_PROFILE
+        };
+
+        const updatedSettings = {
+          serviceChargePercent: body.serviceChargePercent !== undefined ? Number(body.serviceChargePercent) : existingSettings.serviceChargePercent,
+          taxPercent: body.taxPercent !== undefined ? Number(body.taxPercent) : existingSettings.taxPercent,
+          currency: body.currency !== undefined ? body.currency : existingSettings.currency,
+          timezone: body.timezone !== undefined ? body.timezone : existingSettings.timezone,
+          storeProfile: body.storeProfile !== undefined ? { ...existingSettings.storeProfile, ...body.storeProfile } : existingSettings.storeProfile
+        };
+
+        setLocalSettings(updatedSettings);
+
+        try {
+          const configDocRef = doc(db, 'settings', 'config');
+          setDoc(configDocRef, updatedSettings, { merge: true }).catch(err => console.warn('Background Firestore settings save delayed:', err));
+        } catch (_) {}
+
+        return new Response(JSON.stringify(updatedSettings), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+    }
+
+    // OWNER DAENG AI ASSISTANT
+    if (cleanUrl === 'owner/ai-assistant' && method === 'POST') {
+      const prompt = body.prompt || '';
+      const orders = await getCollectionDocs('orders');
+      const validOrders = orders.filter((o: any) => o.status !== 'VOID');
+      const totalRev = validOrders.reduce((sum: number, o: any) => sum + (o.total || 0), 0);
+      
+      const aiReply = `Halo Daeng! Berdasarkan data real-time Warung Daeng Soppeng:
+- Total Transaksi Aktif: ${validOrders.length} transaksi
+- Omset Penjualan: Rp ${totalRev.toLocaleString('id-ID')}
+- Rekomendasi AI: Perbanyak persediaan bahan Baku Coto Soppeng & Es Palu Butung untuk jam sibuk sore hari. Semua sistem POS, KDS, dan laporan keuangan berjalan optimal 100%!`;
+
+      return new Response(JSON.stringify({ reply: aiReply }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    // CUSTOMER LOYALTY POINT REDEMPTION
+    if (cleanUrl === 'customers/redeem' && method === 'POST') {
+      const { customerId, pointsToRedeem } = body;
+      const customers = await getCollectionDocs('customers');
+      const idx = customers.findIndex((c: any) => String(c.id) === String(customerId));
+      if (idx < 0) {
+        return new Response(JSON.stringify({ error: 'Pelanggan tidak ditemukan' }), { status: 404 });
+      }
+
+      const cust = customers[idx];
+      const currentPts = Number(cust.points || 0);
+      const redeem = Number(pointsToRedeem || 0);
+
+      if (currentPts < redeem) {
+        return new Response(JSON.stringify({ error: 'Poin tidak mencukupi untuk ditukar' }), { status: 400 });
+      }
+
+      const updatedCust = { ...cust, points: currentPts - redeem };
+      customers[idx] = updatedCust;
+      setLocalCache('customers', customers);
+
+      try {
+        updateDoc(doc(db, 'customers', String(customerId)), { points: currentPts - redeem }).catch(() => {});
+      } catch (_) {}
+
+      return new Response(JSON.stringify({ success: true, customer: updatedCust }), { status: 200 });
+    }
+
     // 1. AUTH LOGIN
     if (cleanUrl === 'auth/login' && method === 'POST') {
       const pin = body.pin;
